@@ -31,15 +31,19 @@ export default function Homepage(){
                                     source={item.imgurl}
                                     style ={appStyles.flatimg}
                                 />
-                                <View style ={appStyles.iconDiplay}>
-                                    <TouchableOpacity>
-                                        <AntDesign name="heart" size={24} color="black" />
-                                    </TouchableOpacity>
-                                    <TouchableOpacity>
-                                        <AntDesign name="comment" size={24} color="black" />
-                                    </TouchableOpacity>
+                                <View style={appStyles.iconView}>
+                                     <Text style={appStyles.desigerName}> Designer: {item.designer}</Text>
+                                    <View style ={appStyles.iconDiplay}>
+                                        <TouchableOpacity>
+                                            <AntDesign name="heart" size={24} color="black" />
+                                        </TouchableOpacity>
+                                        <TouchableOpacity>
+                                            <AntDesign name="comment" size={24} color="black" />
+                                        </TouchableOpacity>
+                                    </View>
                                 </View>
-                                <Text style={appStyles.desigerName}> Designer: {item.designer}</Text>
+                        
+                                
                                 
                                 
                             </View>

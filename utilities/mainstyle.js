@@ -64,8 +64,14 @@ desigerName:{
 iconDiplay:{
     display:"flex",
     flexDirection:"row",
-   
-
+    gap:10
+    
+},
+iconView:{
+    display:"flex",
+    flexDirection:"row",
+    justifyContent:"space-between",
+    alignItems:"center"
 
 }
 
