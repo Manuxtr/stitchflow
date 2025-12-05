@@ -1,5 +1,7 @@
 import { StyleSheet,Dimensions } from "react-native";
 const screenWidth = Dimensions.get("window")
+import {appColors} from "../utilities/apptheme"
+
 
 export const appStyles = StyleSheet.create({
 bgstyle:{
@@ -7,27 +9,30 @@ bgstyle:{
 },
 HeaderView:{
     backgroundColor:"white"
+    
 },
 Appname:{
     fontSize:30,
     textAlign:"center",
-    color:"blue"
+    color:appColors.navy,
+    fontWeight:"800",
 
 },
 introText:{
     textAlign:"center",
-    fontSize:15
+    fontSize:13,
+    color:appColors.darkblue,
 },
 areaView:{
-    display:"flex",
-    gap:25,
-    backgroundColor:"white"
+    paddingVertical:2,
+    backgroundColor:"white",
+    
 },
 getstartedView:{
     display:"flex",
     width:"100%",
     height:50,
-    backgroundColor:"blue",
+    backgroundColor:appColors.navy,
     alignItems:"center",
     justifyContent:"center",
     borderRadius:100
@@ -50,23 +55,43 @@ headerView:{
 },
 headerText:{
     fontSize:30,
-    color:"red",
+    color:appColors.navy,
     letterSpacing:4.9,
     textAlign:"center",
-    fontWeight:"900"
+    fontWeight:"900",
+    fontFamily:"ReilycElegantDemo-Regular"
 },
 desigerName:{
     fontSize:16,
     fontWeight:"bold",
-    color:"red"
+    color:appColors.darkblue,
+    fontFamily:"Paterna"
 
 },
 iconDiplay:{
     display:"flex",
     flexDirection:"row",
-   
+    gap:30
 
 
+},
+iconView:{
+    display:"flex",
+    flexDirection:"row",
+    justifyContent:"space-between",
+    alignItems:"center"
+
+},
+imgView:{
+   paddingVertical:2,
+    height:500,
+    width:screenWidth,
+},
+introText2:{
+    textAlign:"center",
+    fontSize:20,
+    color:appColors.darkblue,
+    paddingBottom:10,
 }
 
 

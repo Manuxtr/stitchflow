@@ -4,6 +4,8 @@ import { Link } from "expo-router";
 import { eventData } from "../../assets/images/localdata/fashionstyle";
 import {appStyles} from "../../utilities/mainstyle"
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { useFonts } from "expo-font";
+
 
 function ImageSeperator(){
     return(
@@ -13,13 +15,28 @@ function ImageSeperator(){
     )}
 
 export default function Homepage(){
+    const [fontsloaded] = useFonts({
+        "AvegasRoyale-Italic":require("../../fonts/AvegasRoyale-Italic.ttf"),
+        "AvegasRoyale-Regular":require("../../fonts/AvegasRoyale-Regular.ttf"),
+        "AvegasRoyale-Bold":require("../../fonts/AvegasRoyale-Bold.ttf"),
+        "Paterna":require("../../fonts/Paterna.otf"),
+        "ReilycElegantDemo-Regular":require("../../fonts/ReilycElegantDemo-Regular.otf"),
+        
+        
+
+    })
+    if(!fontsloaded){
+        return null
+    }
+
     return(
         <SafeAreaProvider>
             <SafeAreaView>
                 <View>
                    <View style={appStyles.headerView}><Text style={appStyles.headerText}>DESIGN GALLARY</Text></View> 
                    <View>
-              
+                    
+                    
                     <FlatList
                     data={eventData}
                     ItemSeparatorComponent={ImageSeperator}
@@ -31,7 +48,9 @@ export default function Homepage(){
                                     source={item.imgurl}
                                     style ={appStyles.flatimg}
                                 />
-                                <View style ={appStyles.iconDiplay}>
+                                <View style={appStyles.iconView}>
+                                     <Text style={appStyles.desigerName}> Designer: {item.designer}</Text>
+                                    <View style ={appStyles.iconDiplay}>
                                     <TouchableOpacity>
                                         <AntDesign name="heart" size={24} color="black" />
                                     </TouchableOpacity>
@@ -39,7 +58,8 @@ export default function Homepage(){
                                         <AntDesign name="comment" size={24} color="black" />
                                     </TouchableOpacity>
                                 </View>
-                                <Text style={appStyles.desigerName}> Designer: {item.designer}</Text>
+                               
+                                </View>
                                 
                                 
                             </View>
