@@ -13,21 +13,19 @@ export default function Index (){
       <SafeAreaView style ={appStyles.areaView}>
         {/* header */}
       <View style={appStyles.HeaderView}>
-        <Text style={appStyles.Appname} >Stitch flow</Text>
+        <Text style={appStyles.Appname} >STITCH FLOW</Text>
         <Text style={appStyles.introText}>your fashion partner</Text>
      </View>
        {/* body */}
-       <View style={appStyles.imgView}>
+       <View>
           <Image
           source={require("../assets/images/stitchlg.png")}
           style={myStyles.logo}
           />
+          <Text style={appStyles.introText2}>When you choose Stitch Flow Fashion, you're choosing ease,comfort and relaibility</Text>
        </View>
-     <View style={myStyles.intro}>
-      <Text style={appStyles.introText2}>When you choose Stitch Flow Fashion, you're choosing ease,comfort and relaibility</Text>
-     </View>
      {/* bottom */}
-     <View style={{paddingHorizontal:30}} >
+     <View style={{paddingHorizontal:30,paddingBottom:20}} >
       <Link href="/(tabs)/homepage">
         <View style={appStyles.getstartedView}><Text style={appStyles.linktext}>GET STARTED</Text></View>
       </Link>
@@ -40,12 +38,12 @@ export default function Index (){
 const myStyles = StyleSheet.create({
   logo:{
     width:screenWidth,
-    height:500
+    height:420,
+    paddingVertical:30,
+    backgroundColor:"white",
+    resizeMode:"contain",
   },
-  intro:{
-    paddingBottom:30,
-    paddingVertical:10,
-  }
+
 
 })
 

@@ -4,9 +4,7 @@ import {appColors} from "../utilities/apptheme"
 
 
 export const appStyles = StyleSheet.create({
-bgstyle:{
-    flex:1,
-},
+
 HeaderView:{
     backgroundColor:"white"
     
@@ -24,8 +22,12 @@ introText:{
     color:appColors.darkblue,
 },
 areaView:{
-    paddingVertical:2,
     backgroundColor:"white",
+    display:"flex",
+    justifyContent:"space-between",
+    flex:1,
+    marginBottom:20
+    
     
 },
 getstartedView:{
@@ -35,13 +37,15 @@ getstartedView:{
     backgroundColor:appColors.navy,
     alignItems:"center",
     justifyContent:"center",
-    borderRadius:100
+    borderRadius:100,
+    
 
 
 },
 linktext:{
-    color:"white",
-    fontSize:20
+    color:appColors.grey,
+    fontSize:20,
+    fontWeight:"600"
 },
 flatimg:{
     width:screenWidth,
@@ -82,11 +86,7 @@ iconView:{
     alignItems:"center"
 
 },
-imgView:{
-   paddingVertical:2,
-    height:500,
-    width:screenWidth,
-},
+
 introText2:{
     textAlign:"center",
     fontSize:20,
