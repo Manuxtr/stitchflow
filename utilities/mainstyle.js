@@ -92,6 +92,94 @@ introText2:{
     fontSize:20,
     color:appColors.darkblue,
     paddingBottom:10,
+},
+// measurement styles
+scrollcontent:{
+
+},
+measureHeader:{
+    marginBottom:30,
+   
+},
+title:{
+    fontSize:30,
+    textAlign:"center",
+    fontWeight:"800",
+    color:appColors.navy,
+    
+
+},
+subtitle:{
+    fontSize:18,
+    color:appColors.darkblue,
+    textAlign:"center",
+
+
+},
+gendersection:{
+    marginBottom:24,
+},
+gendertitle:{
+    fontSize:15,
+    fontWeight:"bold",
+    color:appColors.darkblue,
+    marginBottom:12,
+    textAlign:"center"  
+
+},
+genderView:{
+    display:"flex",
+    flexDirection:"row",
+    gap:13,
+    justifyContent:"center",
+    alignItems:"center",
+},
+genderbtn:{
+    width:150,
+    borderWidth:2,
+    backgroundColor:appColors.grey,
+    borderColor:appColors.darkblue,
+    paddingVertical:12,
+    borderRadius:8,
+    alignItems:"center",
+    justifyContent:"center"
+},
+genderbtnactive:{
+    backgroundColor:appColors.navy,
+    borderColor:appColors.red,
+},
+gendertext:{
+    fontSize:15,
+    fontWeight:"600",
+    color:appColors.darkblue
+},
+genderTextActive:{
+    color:"white"
+
+},
+unitbtn:{
+     width:150,
+    borderWidth:2,
+    backgroundColor:appColors.grey,
+    borderColor:appColors.navy,
+    paddingVertical:12,
+    borderRadius:8,
+    alignItems:"center",
+    justifyContent:"center"
+
+},
+unitbtnactive:{
+    backgroundColor:appColors.navy,
+    borderColor:appColors.red,
+
+},
+unittextactive:{
+    color:"white"
+},
+unittext:{
+    fontSize:15,
+    fontWeight:"600",
+    color:appColors.darkblue
 }
 
 

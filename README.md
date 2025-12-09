@@ -50,7 +50,7 @@ Join our community of developers creating universal apps.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
 # project idea
 # 1.daniel 
-# 1.victor - laundary
-# 1.fawaz
+# 1.victor - laundary app
+# 1.fawaz - resturant app
 # 1.precious
 # 1.isreal
