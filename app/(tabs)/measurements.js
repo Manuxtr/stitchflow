@@ -1,8 +1,10 @@
-import { SafeAreaProvider } from "react-native-safe-area-context";
-import { View,Text,Image,StyleSheet,Dimensions,ScrollView,KeyboardAvoidingView,TouchableOpacity} from "react-native";
-import { Link } from "expo-router";
-import { appStyles } from "../../utilities/mainstyle";
 import { useState } from "react";
+import { KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableOpacity, View ,Platform} from "react-native";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { appColors } from "../../utilities/apptheme";
+import { appStyles } from "../../utilities/mainstyle";
+import Ionicons from '@expo/vector-icons/Ionicons';
+
 
 
 const MALE_MEASUREMENT = [
@@ -29,23 +31,41 @@ export default function Measurements(){
     const [gender ,setGender] = useState(null)
     const [measurements ,setMeasurements] = useState("inches")
     const [unit , setUnits] = useState({})
+    // const [imgUrl,setimgUrl] = useState("")
 
     const measurementFields = gender === "male" ? MALE_MEASUREMENT : FEMALE_MEASUREMENT ;
+
+    const handleMeasurementChange = (key,value) => {
+        setMeasurements((prev) => ({
+            ...prev,
+            [key]:value
+        }));
+
+    };
+
+    const HandleReset =() =>{
+        setMeasurements({})
+        setGender(null)
+        setUnits("inches")
+    }
 
 
     return(
         <SafeAreaProvider>
-            <KeyboardAvoidingView>
-                <ScrollView style = {appStyles.scrollcontent} >
+            <KeyboardAvoidingView 
+            behavior={Platform.OS ==="ios" ? "padding" : "height"}
+            style={{flex:1}}
+            >
+                <ScrollView contentContainerStyle={appStyles.scrollcontent} >
                 <View>
                     {/* header */}
                    <View style={appStyles.measureHeader}>
-                    <Text style={appStyles.title}>Measurements Screen</Text>
+                    <Text style={appStyles.title}>Measurements</Text>
                     <Text style={appStyles.subtitle}>kindly provide your body measurements for acurate fitting</Text>
                    </View>
                    {/* gender selection */}
                    <View style={appStyles.gendersection}>
-                    <Text style = {appStyles.gendertitle}>Slect your gender</Text>
+                    <Text style = {appStyles.subtitle}>Select your gender</Text>
                     <View style={appStyles.genderView}>
                         <TouchableOpacity
                         style={[appStyles.genderbtn, gender === "male" && appStyles.genderbtnactive]}
@@ -68,7 +88,7 @@ export default function Measurements(){
                     </View>
                     {/* unit selection */}
                     <View>
-                        <Text style={appStyles.title}>Unit of measurement</Text>
+                        <Text style={appStyles.subtitle}>Unit of measurement</Text>
                         <View style={appStyles.genderView}>
                             <TouchableOpacity 
                             style={[appStyles.unitbtn, unit === "inches" && appStyles.unitbtnactive]}
@@ -92,10 +112,50 @@ export default function Measurements(){
                         </View>
 
                     </View>
-                    
                    </View>
-
                 </View>
+                {/* measurement input */}
+                {gender &&  (
+                        <View style={appStyles.section}>
+                            <Text style={appStyles.inputTitle}>Enter Measurements</Text>
+                            <Text style={appStyles.unit}>(in {unit === "inches" ? "inches" : "cm"})</Text>
+                            {measurementFields.map((field) => (
+                                <View key={field.key}>
+                                    <Text style={appStyles.label}>{field.label}</Text>
+                                    <View style={appStyles.inputwrapper}>
+                                        <TextInput
+                                        placeholder={field.placeholder}
+                                        keyboardType="decimal-pad"
+                                        style={appStyles.inputfield}
+                                        placeholderTextColor="white"
+                                        value={measurements[field.key] || ""}
+                                        onChangeText={(value) => handleMeasurementChange(field.key,value) }
+                                        />
+                                        <Text style={appStyles.munit}>{unit === "inches" ? "inches" : "cm"}</Text>
+                                    </View>
+                                </View>
+                            ))
+                              
+                            }
+                
+                        </View>
+                        
+                    )
+                }
+                {/* CALL TO ACTION */}
+                {gender && (
+                    <View style = {appStyles.ctaView}>
+                        <TouchableOpacity style={appStyles.savebtn}>
+                            <Text style={appStyles.ctatext}>Save</Text>
+                        </TouchableOpacity>
+                         <TouchableOpacity
+                         onPress={HandleReset}
+                         style={appStyles.resetbtn}>
+                            <Text  style={appStyles.ctatext}>Reset</Text>
+                        </TouchableOpacity>
+                    </View>
+                )}
+           
                 </ScrollView>
             </KeyboardAvoidingView>
         </SafeAreaProvider>
