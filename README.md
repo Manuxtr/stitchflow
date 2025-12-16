@@ -49,8 +49,8 @@ Join our community of developers creating universal apps.
 - [Expo on GitHub](https://github.com/expo/expo): View our open source platform and contribute.
 - [Discord community](https://chat.expo.dev): Chat with Expo users and ask questions.
 # project idea
-# 1.daniel 
+# 1.daniel - sales and expense tracker
 # 1.victor - laundary app
 # 1.fawaz - resturant app
-# 1.precious
-# 1.isreal
+# 1.precious - window blind booker
+# 1.isreal -  expense
