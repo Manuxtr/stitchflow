@@ -10,7 +10,7 @@ import {getReactNativePersistence,initializeAuth} from "firebase/auth"
 
 // Your web app's Firebase configuration
 const firebaseConfig = {
-  apiKey: "AIzaSyAi7cVWYjxn3DmG82h0AxijLMzQ9ZvPlUE",
+  apiKey: process.env.EXPO_PUBLIC_FIREBASE_API_KEY,
   authDomain: "stitctflow.firebaseapp.com",
   projectId: "stitctflow",
   storageBucket: "stitctflow.firebasestorage.app",

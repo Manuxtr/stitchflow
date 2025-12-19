@@ -4,6 +4,7 @@ import { SafeAreaProvider,SafeAreaView } from "react-native-safe-area-context";
 import { appStyles } from "../../utilities/mainstyle";
 import { db } from "../../config/firebaseconfig";
 import { addDoc,collection } from "firebase/firestore";
+import { appColors } from "../../utilities/apptheme";
 
 
 
@@ -34,7 +35,7 @@ export default function Measurements(){
     const [measurements ,setMeasurements] = useState("inches")
     const [unit , setUnits] = useState({})
     const [IsLoading,setIsLoading] = useState(false)
-    // const [imgUrl,setimgUrl] = useState("")
+
 
     const measurementFields = gender === "male" ? MALE_MEASUREMENT : FEMALE_MEASUREMENT ;
 
@@ -49,15 +50,23 @@ export default function Measurements(){
         if(!gender || Object.keys(measurements).length === 0){
             Alert.alert("Missing Fields","please select a gender and fill in measurements")
         };
-        return;
+        
         setIsLoading(true);
+       try {
         const docRef = await addDoc(collection(db,"measurements"),{
-            gender:"gender",
-            unit:"unit",
-            measurements:"measurements",
-            createdAt:
-        })
-    }
+            gender:gender,
+            unit:unit,
+            measurements:measurements,
+            createdAt: new Date()
+        });
+        Alert.alert("ALERT!!","MEASUREMENTS SAVED SUCCESSFULLY",[{text:"okay"}])
+        setIsLoading(false)
+       } catch (error) {
+        console.log("??????",error)
+        Alert.alert("ERROR","AN ERROR OCCURED WHILE SAVING MEASUREMENTS,PLEASE CHECK YOUR INTERNET CONNECTION")
+        
+       }
+    };
 
 
     const HandleReset =() =>{
@@ -165,8 +174,9 @@ export default function Measurements(){
                     {/* CALL TO ACTION */}
                     {gender && (
                         <View style = {appStyles.ctaView}>
-                            <TouchableOpacity style={appStyles.savebtn}>
-                                <Text style={appStyles.ctatext}>Save</Text>
+                            <TouchableOpacity onPress={HandleMeasurementSave} style={appStyles.savebtn}>
+                               {IsLoading ? <ActivityIndicator color={appColors.red} size="small"/> : 
+                                <Text style={appStyles.ctatext}>Save</Text> }
                             </TouchableOpacity>
                             <TouchableOpacity
                             onPress={HandleReset}
