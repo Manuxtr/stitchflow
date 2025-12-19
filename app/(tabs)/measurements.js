@@ -1,10 +1,10 @@
 import { useState } from "react";
-import { KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableOpacity, View ,Platform, Alert} from "react-native";
+import { KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableOpacity, View ,Platform, Alert,ActivityIndicator} from "react-native";
 import { SafeAreaProvider,SafeAreaView } from "react-native-safe-area-context";
-import { appColors } from "../../utilities/apptheme";
 import { appStyles } from "../../utilities/mainstyle";
 import { db } from "../../config/firebaseconfig";
 import { addDoc,collection } from "firebase/firestore";
+
 
 
 
@@ -33,6 +33,7 @@ export default function Measurements(){
     const [gender ,setGender] = useState(null)
     const [measurements ,setMeasurements] = useState("inches")
     const [unit , setUnits] = useState({})
+    const [IsLoading,setIsLoading] = useState(false)
     // const [imgUrl,setimgUrl] = useState("")
 
     const measurementFields = gender === "male" ? MALE_MEASUREMENT : FEMALE_MEASUREMENT ;
@@ -42,8 +43,13 @@ export default function Measurements(){
             ...prev,
             [key]:value
         }));
-
     };
+
+    const HandleMeasurementSave = async () => {
+        if(!gender || Object.keys(measurements).length === 0){
+            Alert.alert("Missing Fields","please select a gender and fill in measurements")
+        }
+    }
 
 
     const HandleReset =() =>{
@@ -57,10 +63,10 @@ export default function Measurements(){
 
     return(
         <SafeAreaProvider>
-        
+            <SafeAreaView style={{flex:1}}>
                 <KeyboardAvoidingView 
                 behavior={Platform.OS ==="ios" ? "padding" : "height"}
-                style={{flex:1}}
+                style={{flex:1,}}
                 >
                     <ScrollView contentContainerStyle={appStyles.scrollcontent} >
                     <View>
@@ -164,7 +170,7 @@ export default function Measurements(){
             
                     </ScrollView>
                 </KeyboardAvoidingView>
-           
+           </SafeAreaView>
         </SafeAreaProvider>
     )
 }
