@@ -48,7 +48,15 @@ export default function Measurements(){
     const HandleMeasurementSave = async () => {
         if(!gender || Object.keys(measurements).length === 0){
             Alert.alert("Missing Fields","please select a gender and fill in measurements")
-        }
+        };
+        return;
+        setIsLoading(true);
+        const docRef = await addDoc(collection(db,"measurements"),{
+            gender:"gender",
+            unit:"unit",
+            measurements:"measurements",
+            createdAt:
+        })
     }
 
 
