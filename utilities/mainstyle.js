@@ -1,7 +1,7 @@
 import { Dimensions, StyleSheet } from "react-native";
 import { appColors } from "../utilities/apptheme";
 
-const screenWidth = Dimensions.get("window");
+const screenWidth = Dimensions.get("window").width
 
 export const appStyles = StyleSheet.create({
 
@@ -264,6 +264,38 @@ ctatext:{
     fontSize:17,
     fontWeight:800,
     fontFamily:"Paterna"
+},
+card:{
+    width:"100%",
+    height:200,
+    backgroundColor:appColors.navy,
+    borderRadius:50,
+    display:"flex",
+    shadowOpacity:17,
+    shadowRadius:4,
+    shadowOffset:{width:0,height:8},
+   
+     
+},
+scrollcontent:{
+    justifyContent:"center",
+    alignItems:"center",
+    paddingHorizontal:20,
+    paddingTop:30,
+    
+    
+
+},
+cardcontent:{
+position:"absolute",
+top:50,
+left:9,
+display:"flex",
+flexDirection:"row",
+justifyContent:"center",
+alignItems:"center",
+gap:20,
+marginTop:40
 }
 
 

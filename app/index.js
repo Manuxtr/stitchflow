@@ -5,7 +5,7 @@ import { appStyles} from "../utilities/mainstyle"
 
 
 
-const screenWidth = Dimensions.get("window")
+const screenWidth = Dimensions.get("window").width
 
 export default function Index (){
   return(
