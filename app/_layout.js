@@ -31,6 +31,14 @@ export default function RootLayout() {
         title:"index"
       }}
       />
+      <Stack.Screen
+      name="signin"
+      options={{title:"sign in"}}
+      />
+      <Stack.Screen
+      name="signup"
+      options={{title:"sign up"}}
+      />
     </Stack>
    </SafeAreaProvider>
   )

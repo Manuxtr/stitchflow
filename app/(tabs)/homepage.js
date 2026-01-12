@@ -19,33 +19,31 @@ export default function Homepage(){
 
     return(
         <SafeAreaProvider>
-            <SafeAreaView>
-                <View>
+            <SafeAreaView style={{flex:1}}>
+                <View style={{paddingHorizontal:7}}>
                    <View style={appStyles.headerView}><Text style={appStyles.headerText}>DESIGN GALLARY</Text></View> 
                    <View>
-                    
-                    
                     <FlatList
                     data={eventData}
                     ItemSeparatorComponent={ImageSeperator}
                    
                     renderItem={({item}) => {
                         return(
-                            <View style={{paddingHorizontal:4}}>
+                            <View >
                                 <Image
                                     source={item.imgurl}
                                     style ={appStyles.flatimg}
                                 />
                                 <View style={appStyles.iconView}>
                                      <Text style={appStyles.desigerName}> Designer: {item.designer}</Text>
-                                    <View style ={appStyles.iconDiplay}>
-                                    <TouchableOpacity>
-                                        <AntDesign name="heart" size={24} color="black" />
-                                    </TouchableOpacity>
-                                    <TouchableOpacity>
-                                        <AntDesign name="comment" size={24} color="black" />
-                                    </TouchableOpacity>
-                                </View>
+                                        <View style ={appStyles.iconDiplay}>
+                                        <TouchableOpacity>
+                                            <AntDesign name="heart" size={24} color="black" />
+                                        </TouchableOpacity>
+                                        <TouchableOpacity>
+                                            <AntDesign name="comment" size={24} color="black" />
+                                        </TouchableOpacity>
+                                    </View>
                                
                                 </View>
                                 

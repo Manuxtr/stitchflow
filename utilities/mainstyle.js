@@ -189,7 +189,8 @@ unittext:{
 // measurement input styles
 section:{
     marginBottom:24,
-    paddingHorizontal:20
+    paddingHorizontal:20,
+    width:"100%"
 },
 inputTitle:{
     fontSize:18,
@@ -240,6 +241,8 @@ ctaView:{
     flexDirection:"row",
     justifyContent:"space-evenly",
     flex:1,
+    gap:20,
+    paddingBottom:20
 
 
 },
@@ -274,6 +277,8 @@ card:{
     shadowOpacity:17,
     shadowRadius:4,
     shadowOffset:{width:0,height:8},
+    elevation:5,
+    marginTop:20
    
      
 },
@@ -294,21 +299,34 @@ display:"flex",
 flexDirection:"row",
 justifyContent:"center",
 alignItems:"center",
-gap:20,
-marginTop:40
+gap:14,
+marginTop:20
+},
+viewMeasurements:{
+    marginTop:20,
+    justifyContent:"center",
+    alignItems:"center",
+    backgroundColor:appColors.red,
+    height:50,
+    width:"100%",
+    borderRadius:50,
+    display:"flex",
+    flexDirection:"row",
+    gap:10,
+  
 }
-
-
-
-// imgsection:{
-//     display:"flex",
-//     flexDirection:"row",
-//     justifyContent:"space-between",
-//     alignItems:"center",
-//     marginTop:20,
-//     paddingHorizontal:20
-// }
-
+,
+ViewMtext:{
+    color:"white",
+    fontWeight:"400"
+},
+textinput:{
+    borderWidth:1,
+    flex:1,
+    height:40,
+   borderRadius:50,
+   borderColor:appColors.navy,
+}
 
 
 

@@ -149,7 +149,7 @@ export default function Measurements(){
                                 <Text style={appStyles.inputTitle}>Enter Measurements</Text>
                                 <Text style={appStyles.unit}>(in {unit === "inches" ? "inches" : "cm"})</Text>
                                 {measurementFields.map((field) => (
-                                    <View key={field.key}>
+                                    <View key={field.key} >
                                         <Text style={appStyles.label}>{field.label}</Text>
                                         <View style={appStyles.inputwrapper}>
                                             <TextInput
