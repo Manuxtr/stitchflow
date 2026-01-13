@@ -55,7 +55,7 @@ export default function History(){
                                     <FontAwesome name="user-circle" size={54} color="white" />}
                             </TouchableOpacity>
                             <Text style={{fontSize:19,fontWeight:"800",color:"white",fontFamily:"Paterna"}}>Hi Tochukwu</Text>
-                            <Text style={{fontSize:18,color:"white",fontFamily:"AvegasRoyale-Bold"}}>Date Joined  {new Date().toLocaleString('en-US', {month:"short", year: 'numeric' })}</Text>
+                            <Text style={{fontSize:14,color:"white",fontFamily:"AvegasRoyale-Bold"}}>Date Joined  {new Date().toLocaleString('en-US', {month:"short", year: 'numeric' })}</Text>
                         </View>
                     </View>
                     <View style={{justifyContent:"center",alignItems:"center",marginTop:20}}>
@@ -94,10 +94,14 @@ export default function History(){
 
                     </View>
                 </View>
+
                     
-                {/* <Link href={"/signup"}>
+                <Link href={"/signup"}>
+                <Text>TO SIGN up</Text>
+                </Link>
+                 <Link href={"/signin"}>
                 <Text>TO SIGN IN</Text>
-                </Link> */}
+                </Link>
               
             </SafeAreaView>
         </SafeAreaProvider>

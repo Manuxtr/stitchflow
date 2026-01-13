@@ -326,6 +326,56 @@ textinput:{
     height:40,
    borderRadius:50,
    borderColor:appColors.navy,
+},
+// sign up
+googlebtn:{
+    height:50,
+    display:"flex",
+    flexDirection:"row",
+    gap:14,
+    justifyContent:"center",
+    alignItems:"center",
+    backgroundColor:appColors.navy,
+    width:300,
+    borderRadius:10
+
+},
+orsection:{
+    display:"flex",
+    flexDirection:"row",
+    justifyContent:"space-evenly",
+    alignItems:"center"
+},
+line:{
+    width:"30%",
+    borderTopWidth:1,
+    borderTopColor:appColors.navy
+},
+ortext:{
+    fontSize:16,
+    color:appColors.navy,
+    fontWeight:"400"
+},
+inputField:{
+    width:300,
+    height:50,
+    borderWidth:1,
+    borderColor:appColors.navy,
+    borderRadius:12
+    
+},
+eyeview:{
+    display:"flex",
+    flexDirection:"row",
+    width:300,
+    height:50,
+    borderWidth:1,
+    borderColor:appColors.navy,
+    borderRadius:12,
+    justifyContent:"center",
+    alignItems:"center"
+
+    
 }
 
 
