@@ -34,8 +34,12 @@ export default function Homepage(){
                                     source={item.imgurl}
                                     style ={appStyles.flatimg}
                                 />
-                                <View style={appStyles.iconView}>
-                                     <Text style={appStyles.desigerName}> Designer: {item.designer}</Text>
+                                <View style={{display:"flex",flexDirection:"row",justifyContent:"space-between"}}>
+                                    <View>
+                                    <Text style={appStyles.desigerName}> Designer: {item.designer}</Text>
+                                    {/* <Text style={appStyles.desigerName}> Description: {item.desc}</Text> */}
+                                 </View>
+                                    <View style={appStyles.iconView}>
                                         <View style ={appStyles.iconDiplay}>
                                         <TouchableOpacity>
                                             <AntDesign name="heart" size={24} color="black" />
@@ -45,10 +49,10 @@ export default function Homepage(){
                                         </TouchableOpacity>
                                     </View>
                                
+                                     </View>
                                 </View>
-                                
-                                
                             </View>
+                            
                         )
                     }}
                     />

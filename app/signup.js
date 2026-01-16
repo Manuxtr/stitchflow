@@ -1,18 +1,56 @@
-import { View,Text,ScrollView,KeyboardAvoidingView,TouchableOpacity,Image,TextInput } from "react-native";
+import { View,Text,ScrollView,KeyboardAvoidingView,TouchableOpacity,Image,TextInput,Alert } from "react-native";
 import { SafeAreaProvider,SafeAreaView } from "react-native-safe-area-context";
 import { appStyles } from "../utilities/mainstyle";
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { appColors } from "../utilities/apptheme";
 import { Link } from "expo-router";
+import { useFormik } from "formik";
+import { useAuth } from "../config/authcontext";
+import { useState } from "react";
+import { signUpSchema } from "../components/signupvalidation";
+import { useRouter } from "expo-router";
+import { Value } from "react-native/types_generated/Libraries/Animated/AnimatedExports";
 
 
 
 export default function Signup(){
+    const [signup] = useAuth()
+    const [isLoading,setIsLoading] = useState(false)
+    const [showPassword,setShowPassword] = useState(false)
+     const [showComPassword,setShowComPassword] = useState(false)
+
+     const router = useRouter()
+
+    //  password visibility
+
+    const {handleBlur,handleChange,handleSubmit,handleReset,errors,touched,values} = useFormik({
+        initialValues:{fullname:"",username:"",phone:"",email:"",password:"",passwordComfirmation:""},
+        onSubmit:async () => {
+            setIsLoading(false)
+            try {
+                const {success,error} = await signup(values);
+                if(!success){
+                    Alert.alert("signup failed",error || "please try again")
+                    setIsLoading(false)
+                    return
+                }   
+                setIsLoading(false)
+                router.replace("/(tabs)/homepage")
+            } catch (error) {
+                Alert.alert("error","an error occures")
+                setIsLoading(false)
+            }
+        },
+        validateOnMount:signUpSchema
+    })
+
+
+
     return(
         <SafeAreaProvider>
             <KeyboardAvoidingView>
                 <ScrollView>
-                    <View style={{justifyContent:"center",alignItems:"center"}}>
+                    <View style={{justifyContent:"center",alignItems:"center",marginTop:90}}>
                         <Text>Create new account</Text>
                         <TouchableOpacity style={appStyles.googlebtn}>
                             <Image

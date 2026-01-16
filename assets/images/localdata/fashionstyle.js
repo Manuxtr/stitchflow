@@ -2,7 +2,8 @@
 export const eventData = [
     {id:"jdyyeuueiwyuo2mn837",
      designer:"SEYI VODI" ,
-     imgurl:require("../../../assets/images/y1.jpg")
+     imgurl:require("../../../assets/images/y1.jpg"),
+     desc:"very fitting and trendy,afforadable and african,buy and slay"
     },
     {
         id:"epjdiisye2ie93",

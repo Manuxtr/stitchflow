@@ -13,7 +13,7 @@ export default function Signup(){
         <SafeAreaProvider>
             <KeyboardAvoidingView>
                 <ScrollView>
-                    <View style={{justifyContent:"center",alignItems:"center"}}>
+                    <View style={{justifyContent:"center",alignItems:"center",marginTop:210}}>
                         <Text>Sign in account</Text>
                         <TouchableOpacity style={appStyles.googlebtn}>
                             <Image

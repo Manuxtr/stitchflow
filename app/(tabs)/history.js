@@ -1,5 +1,5 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Text, TouchableOpacity, View ,TextInput, Image,Alert} from "react-native";
+import { Text, TouchableOpacity, View ,TextInput, Image,Alert,ScrollView} from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { appStyles } from "../../utilities/mainstyle";
 import { Link } from 'expo-router';
@@ -94,6 +94,13 @@ export default function History(){
 
                     </View>
                 </View>
+                {/* recent measurement list */}
+                <ScrollView>
+                    <Text>Recent Measurement</Text>
+                    <View>
+                        
+                    </View>
+                </ScrollView>
 
                     
                 <Link href={"/signup"}>

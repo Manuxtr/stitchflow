@@ -3,6 +3,7 @@ import { useFonts } from "expo-font";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 
 export default function RootLayout() {
+  
    const [fontsloaded] = useFonts({
         "AvegasRoyale-Italic":require("../fonts/AvegasRoyale-Italic.ttf"),
         "AvegasRoyale-Regular":require("../fonts/AvegasRoyale-Regular.ttf"),
@@ -33,11 +34,15 @@ export default function RootLayout() {
       />
       <Stack.Screen
       name="signin"
-      options={{title:"sign in"}}
+      options={{title:"sign in",
+        headerShown:false
+      }}
       />
       <Stack.Screen
       name="signup"
-      options={{title:"sign up"}}
+      options={{title:"sign up",
+        headerShown:false
+      }}
       />
     </Stack>
    </SafeAreaProvider>
