@@ -9,6 +9,7 @@ import {signUpSchema} from "../components/signupvalidation"
 import { useState } from "react";
 import {useAuth} from "../config/AuthContest"
 import { useRouter } from "expo-router";
+import { ActivityIndicator } from "react-native";
 
 
 
@@ -81,7 +82,10 @@ export default function Signup() {
                                 onBlur={handleBlur("fullname")}
                                 
                             />
-                            <View><Text>{errors.fullname}</Text></View>
+                            <View>
+                                { touched.fullname && errors.fullname && (
+                                <Text>{errors.fullname}</Text>)}
+                            </View>
                             
                             <TextInput
                                 keyboardType="default"
@@ -145,9 +149,10 @@ export default function Signup() {
                                 </TouchableOpacity>
                             </View>
                               <View><Text>{errors.passwordConfirmation}</Text></View>
-                            <TouchableOpacity>
+                            <TouchableOpacity onPress={handleSubmit}>
                                 <View style={{ height: 50, width: 300, backgroundColor: appColors.navy, justifyContent: "center", alignItems: "center", borderRadius: 15 }}>
-                                    <Text style={{ fontSize: 15, color: "white", fontWeight: "600" }}>Sign up</Text>
+                                    {isLoading ? <ActivityIndicator size={"small"} color="red"/> :
+                                        <Text style={{ fontSize: 15, color: "white", fontWeight: "600" }}>Sign up</Text>}
                                 </View>
                             </TouchableOpacity>
                             <View style={{ justifyContent: "center", alignItems: "center" }}>

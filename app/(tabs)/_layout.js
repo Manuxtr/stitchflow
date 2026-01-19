@@ -1,10 +1,19 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { Tabs } from "expo-router";
+import { Tabs ,Redirect} from "expo-router";
+import { useAuth } from '../../config/AuthContest';
+
+
 
 
 export default function _Layout() {
-
+    
+    const {loading,user} = useAuth()
+    if(loading)
+        return null
+    if(!user){
+        return <Redirect href={"/signin"}/>
+    }
 
 
 

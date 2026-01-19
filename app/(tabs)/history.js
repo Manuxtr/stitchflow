@@ -126,12 +126,12 @@ export default function History(){
             
 
                     
-                <Link href={"/signup"}>
+                {/* <Link href={"/signup"}>
                 <Text>TO SIGN up</Text>
                 </Link>
                  <Link href={"/signin"}>
                 <Text>TO SIGN IN</Text>
-                </Link>
+                </Link> */}
               
             </SafeAreaView>
         </SafeAreaProvider>
