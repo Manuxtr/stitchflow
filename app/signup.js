@@ -1,62 +1,67 @@
-import { View,Text,ScrollView,KeyboardAvoidingView,TouchableOpacity,Image,TextInput,Alert } from "react-native";
-import { SafeAreaProvider,SafeAreaView } from "react-native-safe-area-context";
+import { View, Text, ScrollView, KeyboardAvoidingView, TouchableOpacity, Image, TextInput, Alert } from "react-native";
+import { SafeAreaProvider,} from "react-native-safe-area-context";
 import { appStyles } from "../utilities/mainstyle";
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { appColors } from "../utilities/apptheme";
+import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { Link } from "expo-router";
 import { useFormik } from "formik";
-import { useAuth } from "../config/authcontext";
+import {signUpSchema} from "../components/signupvalidation"
 import { useState } from "react";
-import { signUpSchema } from "../components/signupvalidation";
+import {useAuth} from "../config/AuthContest"
 import { useRouter } from "expo-router";
-import { Value } from "react-native/types_generated/Libraries/Animated/AnimatedExports";
 
 
 
-export default function Signup(){
-    const [signup] = useAuth()
-    const [isLoading,setIsLoading] = useState(false)
+export default function Signup() {
+
+    const { signUp } = useAuth();
+    const [isLoading, setisLoading] = useState(false); 
     const [showPassword,setShowPassword] = useState(false)
-     const [showComPassword,setShowComPassword] = useState(false)
+    const [showcomPassword,setShowcomPassword] = useState(false)
 
-     const router = useRouter()
+  const router = useRouter();
 
-    //  password visibility
+//   password visibility
+  const togglePasswordVisibility = () => {
+    setShowPassword(!showPassword)
+  }
+  const togglePasswordVisibility2 = () => {
+    setShowcomPassword(!showcomPassword)
+  }
 
-    const {handleBlur,handleChange,handleSubmit,handleReset,errors,touched,values} = useFormik({
-        initialValues:{fullname:"",username:"",phone:"",email:"",password:"",passwordComfirmation:""},
-        onSubmit:async () => {
-            setIsLoading(false)
-            try {
-                const {success,error} = await signup(values);
-                if(!success){
-                    Alert.alert("signup failed",error || "please try again")
-                    setIsLoading(false)
-                    return
-                }   
-                setIsLoading(false)
-                router.replace("/(tabs)/homepage")
-            } catch (error) {
-                Alert.alert("error","an error occures")
-                setIsLoading(false)
-            }
-        },
-        validateOnMount:signUpSchema
-    })
+  const { handleBlur, handleChange, handleSubmit, touched, errors, values } = useFormik({
+    initialValues: {username:"", fullname:"",phone:"",email: "", password: "", passwordConfirmation: "" },
+    onSubmit: async () => {
+      setisLoading(true);
+      try {
+        // call signUp from AuthContext
+        const { success, error } = await signUp(values);
+        if (!success) {
+          Alert.alert("Signup failed", error || "Please try again");
+          setisLoading(false);
+          return;
+        }
+        setisLoading(false);
+        router.replace("/(tabs)/homefeeds");
+      } catch (err) {
+        Alert.alert("Signup failed", "An unexpected error occurred");
+        setisLoading(false);
+      }
+    },
+      validationSchema:signUpSchema
+  });
 
-
-
-    return(
+    return (
         <SafeAreaProvider>
             <KeyboardAvoidingView>
                 <ScrollView>
-                    <View style={{justifyContent:"center",alignItems:"center",marginTop:90}}>
+                    <View style={{ justifyContent: "center", alignItems: "center", marginTop: 90 }}>
                         <Text>Create new account</Text>
                         <TouchableOpacity style={appStyles.googlebtn}>
                             <Image
-                            source={require("../assets/images/googlelogo.png")}
+                                source={require("../assets/images/googlelogo.png")}
                             />
-                            <Text style={{color:"white",fontSize:16}}>Google</Text>
+                            <Text style={{ color: "white", fontSize: 16 }}>Google</Text>
                         </TouchableOpacity>
                         {/* or section */}
                         <View style={appStyles.orsection}>
@@ -65,89 +70,90 @@ export default function Signup(){
                             <View style={appStyles.line}></View>
                         </View>
                         {/* form */}
-                        <View style={{flex:1 ,gap:20}}>
+                        <View style={{ flex: 1, gap: 20 }}>
                             <TextInput
-                            keyboardType="default"
-                            placeholder="e.g Daniel Praise"
-                            placeholderTextColor="black"
-                            style={appStyles.inputField}
-                            // value=""
-                            // onChangeText={}
-                            // onBlur={}
-                            />
-                            <TextInput
-                            keyboardType="default"
-                            placeholder="e.g @danny001"
-                            placeholderTextColor="black"
-                            style={appStyles.inputField}
-                            // value=""
-                            // onChangeText={}
-                            // onBlur={}
-                            />
-                            <TextInput
-                            keyboardType="phone-pad"
-                            placeholder="e.g 09132810490"
-                            placeholderTextColor="black"
-                            style={appStyles.inputField}
-                            // value=""
-                            // onChangeText={}
-                            // onBlur={}
-                            />
-                            <TextInput
-                            keyboardType="email-address"
-                            placeholder="e.g danny@gmail.com "
-                            placeholderTextColor="black"
-                            style={appStyles.inputField}
-                            // value=""
-                            // onChangeText={}
-                            // onBlur={}
-                            />
-                           <View style={appStyles.eyeview}>
-                                <TextInput
                                 keyboardType="default"
-                                secureTextEntry={false}
-                                placeholder="create password"
+                                placeholder="e.g Daniel Praise"
                                 placeholderTextColor="black"
-                                style={{flex:1}}
-                                // value=""
-                                // onChangeText={}
-                                // onBlur={}
-                                />
-                                 <TouchableOpacity>
-                                    <FontAwesome5 name="eye" size={24} color={appColors.navy} />
-                                 </TouchableOpacity>
-                           </View>
+                                style={appStyles.inputField}
+                            value={values.fullname}
+                            onChangeText={handleChange("fullname")}
+                            onBlur={handleBlur("fullname")}
+                            />
+                            <TextInput
+                                keyboardType="default"
+                                placeholder="e.g @danny001"
+                                placeholderTextColor="black"
+                                style={appStyles.inputField}
+                                value={values.username}
+                                onChangeText={handleChange("username")}
+                                onBlur={handleBlur("username")}
+                            />
+                            <TextInput
+                                keyboardType="phone-pad"
+                                placeholder="e.g 09132810490"
+                                placeholderTextColor="black"
+                                style={appStyles.inputField}
+                                value= {values.phone}
+                                onChangeText={handleChange("phone")}
+                                onBlur={handleBlur("phone")}
+                            />
+                            <TextInput
+                                keyboardType="email-address"
+                                placeholder="e.g danny@gmail.com "
+                                placeholderTextColor="black"
+                                style={appStyles.inputField}
+                                value={values.email}
+                                onChangeText={handleChange("email")}
+                                onBlur={handleBlur("email")}
+                            />
                             <View style={appStyles.eyeview}>
                                 <TextInput
-                                keyboardType="default"
-                                secureTextEntry={false}
-                                placeholder="confirm password"
-                                placeholderTextColor="black"
-                                style={{flex:1}}
-                                // value=""
-                                // onChangeText={}
-                                // onBlur={}
+                                    keyboardType="default"
+                                    secureTextEntry={false}
+                                    placeholder="create password"
+                                    placeholderTextColor="black"
+                                    style={{ flex: 1 }}
+                                    value={values.password}
+                                    onChangeText={handleChange("password")}
+                                    onBlur={handleBlur("password")}
                                 />
                                 <TouchableOpacity>
                                     <FontAwesome5 name="eye" size={24} color={appColors.navy} />
-                                 </TouchableOpacity>
-                           </View>
-                           <TouchableOpacity>
-                            <View style={{height:50,width:300,backgroundColor:appColors.navy,justifyContent:"center",alignItems:"center",borderRadius:15}}>
-                                <Text style={{fontSize:15,color:"white",fontWeight:"600"}}>Sign up</Text>
+                                </TouchableOpacity>
                             </View>
-                           </TouchableOpacity>
-                            <View style={{justifyContent:"center",alignItems:"center"}}>
+                            <View style={appStyles.eyeview}>
+                                <TextInput
+                                    keyboardType="default"
+                                    secureTextEntry={false}
+                                    placeholder="confirm password"
+                                    placeholderTextColor="black"
+                                    style={{ flex: 1 }}
+                                    value={values.passwordConfirmation}
+                                    onChangeText={handleChange("passwordConfirmation")}
+                                    onBlur={handleBlur("passwordConfirmation")}
+                                />
+                                <TouchableOpacity>
+                                    <FontAwesome5 name="eye" size={24} color={appColors.navy} />
+                                </TouchableOpacity>
+                            </View>
+                            <TouchableOpacity>
+                                <View style={{ height: 50, width: 300, backgroundColor: appColors.navy, justifyContent: "center", alignItems: "center", borderRadius: 15 }}>
+                                    <Text style={{ fontSize: 15, color: "white", fontWeight: "600" }}>Sign up</Text>
+                                </View>
+                            </TouchableOpacity>
+                            <View style={{ justifyContent: "center", alignItems: "center" }}>
                                 <Link href={"/signin"}>
                                     <Text>{"Already have an account?? go to sign in"}</Text>
                                 </Link>
                             </View>
                         </View>
-                      
-                        
+
+
                     </View>
                 </ScrollView>
             </KeyboardAvoidingView>
         </SafeAreaProvider>
     )
 }
+

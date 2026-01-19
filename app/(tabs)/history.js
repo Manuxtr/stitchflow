@@ -1,17 +1,25 @@
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-import { Text, TouchableOpacity, View ,TextInput, Image,Alert,ScrollView} from "react-native";
+import { Link } from 'expo-router';
+import { Alert, FlatList, Image, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
 import { appStyles } from "../../utilities/mainstyle";
-import { Link } from 'expo-router';
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import { appColors } from '../../utilities/apptheme';
 import MaterialIcons from '@expo/vector-icons/MaterialIcons';
 import * as ImagePicker from 'expo-image-picker';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { appColors } from '../../utilities/apptheme';
+import { useAuth } from '../../config/AuthContest';
+import { collection,doc,getDoc,onSnapshot,query,where } from 'firebase/firestore';
+import { db } from '../../config/firebaseconfig';
+
+
 
 
 
 export default function History(){
+
+        const {user}  = useAuth()
+        const [measurementHistory,setMeasurementHistory] = useState(false)
         const [profileImage,setProfileImage] = useState(null);
 
         // function to pick image from gallery
@@ -36,6 +44,25 @@ export default function History(){
                 Alert.alert("An error occurred while uploading the image.");  
             }
         };
+        // fetch user data
+        // useEffect(() => {
+        //     const fetchMeasurements = () => {
+        //         const dbrequest = query(collection(db,"measurements",),
+        //    )
+
+        //     // realtime update
+        //     onSnapshot(dbrequest,(dbresult) => {
+        //         const redata = []
+        //         dbresult.forEach(doc => redata.push({
+        //             id:doc.id,
+        //             data:doc.data()
+        //         }));
+        //         setMeasurementHistory(redata)
+        //         console.log(".......",redata)
+        //     })
+        //     }
+        //     return fetchMeasurements()
+        // },[])
 
     return(
         <SafeAreaProvider>
@@ -62,12 +89,13 @@ export default function History(){
                         <Text style={{fontSize:20,fontWeight:"700",color:appColors.navy}}>ORDER MANAGEMENT</Text>
                     </View>
                       
-                        <TouchableOpacity style={{flexDirection:"row",alignItems:"center",gap:10}}>
+                        <TouchableOpacity  style={{flexDirection:"row",alignItems:"center",gap:10}}>
                             <View style={appStyles.viewMeasurements}>
                             <FontAwesome5 name="eye" size={24} color={appColors.navy} />
                             <Text style={appStyles.ViewMtext}>View Measurements</Text>
                              </View>
                         </TouchableOpacity>
+                        
                    
                     <View style={{flexDirection:"row",justifyContent:"center",alignItems:"center",gap:10,marginTop:20}}>
                         <MaterialIcons name="delivery-dining" size={44} color={appColors.navy}/>
@@ -95,12 +123,7 @@ export default function History(){
                     </View>
                 </View>
                 {/* recent measurement list */}
-                <ScrollView>
-                    <Text>Recent Measurement</Text>
-                    <View>
-                        
-                    </View>
-                </ScrollView>
+            
 
                     
                 <Link href={"/signup"}>

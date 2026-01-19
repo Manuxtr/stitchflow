@@ -1,16 +1,24 @@
-import * as yup from "yup"
+import * as yup from "yup";
 
-export const signUpSchema = yup.object({
-    fullname:yup.string().required("full name is required"),
-    username:yup.string().min("username must at least 4 characters").required("username is required"),
-    phone:yup.string().matches([0-9]).max(11,"phone should be 11 digits").required("phone is required"),
-    email:yup.string()
-    .min(6,"password smust be atleast 6 characters")
-    .matches(/[A-Z]/, "password must contain at least one uppercase")
-    .matches(/[a-z]/, "password must contain at least one lowercase")
-    .matches(/[!@#$%^&*]/,"password must contain a special character")
-    .required("password is required"),
-    passwordComfirmation:yup.string()
-    .oneOf([yup.ref("password",null,"password must match")])
-    .required("please comfirm password")
-})
+export const signUpValidation = yup.object({
+  fullname: yup.string().required('Full name is required'),
+  username: yup.string().min(3, 'Username must be at least 3 characters').required('Username is required'),
+  phone: yup.string().matches(/^[0-9+\-() ]*$/, 'Phone number is invalid').required('Phone is required'),
+  email: yup.string().email('Invalid email').required('Email is required'),
+  password: yup.string()
+    .min(8, 'Password must be at least 8 characters long.')
+    .matches(/[A-Z]/, 'Password must contain at least one uppercase letter.')
+    .matches(/[a-z]/, 'Password must contain at least one lowercase letter.')
+    .matches(/\d/, 'Password must contain at least one number.')
+    .matches(/[!@#$%^&*]/, 'Password must contain at least one special character.')
+    .required('Password is required'),
+  passwordConfirmation: yup.string()
+    .oneOf([yup.ref('password'), null], 'Passwords must match')
+    .required('Please confirm your password'),
+});
+
+// Provide signInValidation for backwards compatibility
+// export const signInValidation = yup.object({
+//   email: yup.string().email().required('Email is required'),
+//   password: yup.string().required('Password is required'),
+// });
