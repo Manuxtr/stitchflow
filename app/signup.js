@@ -76,10 +76,13 @@ export default function Signup() {
                                 placeholder="e.g Daniel Praise"
                                 placeholderTextColor="black"
                                 style={appStyles.inputField}
-                            value={values.fullname}
-                            onChangeText={handleChange("fullname")}
-                            onBlur={handleBlur("fullname")}
+                                value={values.fullname}
+                                onChangeText={handleChange("fullname")}
+                                onBlur={handleBlur("fullname")}
+                                
                             />
+                            <View><Text>{errors.fullname}</Text></View>
+                            
                             <TextInput
                                 keyboardType="default"
                                 placeholder="e.g @danny001"
@@ -89,6 +92,7 @@ export default function Signup() {
                                 onChangeText={handleChange("username")}
                                 onBlur={handleBlur("username")}
                             />
+                              <View><Text>{errors.username}</Text></View>
                             <TextInput
                                 keyboardType="phone-pad"
                                 placeholder="e.g 09132810490"
@@ -98,6 +102,7 @@ export default function Signup() {
                                 onChangeText={handleChange("phone")}
                                 onBlur={handleBlur("phone")}
                             />
+                              <View><Text>{errors.phone}</Text></View>
                             <TextInput
                                 keyboardType="email-address"
                                 placeholder="e.g danny@gmail.com "
@@ -107,6 +112,7 @@ export default function Signup() {
                                 onChangeText={handleChange("email")}
                                 onBlur={handleBlur("email")}
                             />
+                              <View><Text>{errors.email}</Text></View>
                             <View style={appStyles.eyeview}>
                                 <TextInput
                                     keyboardType="default"
@@ -122,6 +128,7 @@ export default function Signup() {
                                     <FontAwesome5 name="eye" size={24} color={appColors.navy} />
                                 </TouchableOpacity>
                             </View>
+                              <View><Text>{errors.password}</Text></View>
                             <View style={appStyles.eyeview}>
                                 <TextInput
                                     keyboardType="default"
@@ -137,6 +144,7 @@ export default function Signup() {
                                     <FontAwesome5 name="eye" size={24} color={appColors.navy} />
                                 </TouchableOpacity>
                             </View>
+                              <View><Text>{errors.passwordConfirmation}</Text></View>
                             <TouchableOpacity>
                                 <View style={{ height: 50, width: 300, backgroundColor: appColors.navy, justifyContent: "center", alignItems: "center", borderRadius: 15 }}>
                                     <Text style={{ fontSize: 15, color: "white", fontWeight: "600" }}>Sign up</Text>

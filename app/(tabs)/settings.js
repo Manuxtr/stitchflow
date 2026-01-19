@@ -36,7 +36,7 @@ export default function Settings(){
             };
     return(
         <SafeAreaProvider>
-            <SafeAreaView style={{flex:1,gap:50}}>
+            <SafeAreaView style={{flex:1,gap:50,paddingHorizontal:7}}>
                 {/* profile info */}
                  <View style={appStyles.card}>
                                         {/* card content */}
@@ -55,6 +55,17 @@ export default function Settings(){
                                         </View>
                                     </View>
               <View>
+              <View>
+                  <TouchableOpacity>
+                    <Text>Profile Setting</Text>
+                </TouchableOpacity>
+                  <TouchableOpacity>
+                    <Text>Delete account</Text>
+                </TouchableOpacity>
+                  <TouchableOpacity>
+                    <Text>change password</Text>
+                </TouchableOpacity>
+              </View>
                 <TouchableOpacity>
                     <View style={{display:"flex",flexDirection:"row",justifyContent:"center",alignItems:"center", gap:15}}>
                     <Text>Logout</Text>
