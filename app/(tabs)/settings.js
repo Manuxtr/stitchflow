@@ -1,5 +1,5 @@
 import { SafeAreaView,SafeAreaProvider } from "react-native-safe-area-context";
-import { View,Text,Image,StyleSheet,Dimensions,TouchableOpacity } from "react-native";
+import { View,Text,Image,StyleSheet,Dimensions,TouchableOpacity, Alert,ActivityIndicator } from "react-native";
 import { Link } from "expo-router";
 import { appStyles } from "../../utilities/mainstyle";
 import * as ImagePicker from 'expo-image-picker';
@@ -7,8 +7,20 @@ import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { useState } from 'react'
 import FontAwesome from '@expo/vector-icons/FontAwesome';
 import AntDesign from '@expo/vector-icons/AntDesign';
+import  {useAuth} from "../../config/AuthContest"
 
 export default function Settings(){
+    const {user,logout} = useAuth()
+    const [isLoading,setIsLoading] = useState(false)
+
+    const handleLogout = async () => {
+        try {
+            await logout()
+        } catch (error) {
+            Alert.alert("error","logout failed")
+        }
+
+    }
 
      const [profileImage,setProfileImage] = useState(null);
     
@@ -66,9 +78,12 @@ export default function Settings(){
                     <Text>change password</Text>
                 </TouchableOpacity>
               </View>
-                <TouchableOpacity>
+                <TouchableOpacity onPress={handleLogout}>
                     <View style={{display:"flex",flexDirection:"row",justifyContent:"center",alignItems:"center", gap:15}}>
-                    <Text>Logout</Text>
+
+                  {isLoading ? <ActivityIndicator size={"small"} color={"red"}/> 
+                  :
+                    <Text>Logout</Text> }
                     <AntDesign name="login" size={24} color="black" />
                 </View>
                 </TouchableOpacity>

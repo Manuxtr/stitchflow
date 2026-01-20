@@ -43,7 +43,7 @@ export default function Signup() {
           return;
         }
         setisLoading(false);
-        router.replace("/(tabs)/homefeeds");
+        router.replace("/(tabs)/homepage");
       } catch (err) {
         Alert.alert("Signup failed", "An unexpected error occurred");
         setisLoading(false);

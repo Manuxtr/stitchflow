@@ -1,6 +1,6 @@
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { Link ,useRouter} from "expo-router";
-import { Alert, Image, KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
+import { Alert, Image, KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableOpacity, View,ActivityIndicator } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { appColors } from "../utilities/apptheme";
 import { appStyles } from "../utilities/mainstyle";
@@ -16,7 +16,7 @@ import { auth } from '../config/firebaseconfig';
 export default function Signin() {
 const [email,setEmail] = useState("")
 const [password,setPassword] = useState("")
-const {login} = useAuth()
+const {login,user} = useAuth()
 const [isLaoading,setIsLoading] = useState(false)
 
 
@@ -91,7 +91,8 @@ const handleLogin = async () => {
 
                             <TouchableOpacity onPress={handleLogin}>
                                 <View style={{ height: 50, width: 300, backgroundColor: appColors.navy, justifyContent: "center", alignItems: "center", borderRadius: 15 }}>
-                                    <Text style={{ fontSize: 15, color: "white", fontWeight: "600" }}>Sign in</Text>
+                                   { isLaoading ? <ActivityIndicator size={"small"} color={"red"}/> :
+                                    <Text style={{ fontSize: 15, color: "white", fontWeight: "600" }}>Sign in</Text>}
                                 </View>
                             </TouchableOpacity>
                             <View style={{ justifyContent: "center", alignItems: "center" }}>
