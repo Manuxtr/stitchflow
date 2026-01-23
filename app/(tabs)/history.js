@@ -19,6 +19,7 @@ import { db } from '../../config/firebaseconfig';
 export default function History(){
 
         const {user}  = useAuth()
+        const [loading,setLoading] = useState(false)
         const [measurementHistory,setMeasurementHistory] = useState(false)
         const [profileImage,setProfileImage] = useState(null);
 
@@ -45,24 +46,41 @@ export default function History(){
             }
         };
         // fetch user data
-        // useEffect(() => {
-        //     const fetchMeasurements = () => {
-        //         const dbrequest = query(collection(db,"measurements",),
-        //    )
+        useEffect(() => {
+            // realtime update from db
+            setLoading(true)
+             const unsubscribe = onSnapshot(
+                    collection(db,"measurements"),
+                    (snapShot) => {
+                        const measurementData = [];
+                        snapShot.forEach((doc) => {
+                            measurementData.push({
+                                id:doc.id,
+                                data:doc.data()
+                            });
+                        });
+                        // sorting according recent date
+                        measurementData.sort((a,b) => {
+                            const dateA = a.createdAt?.toDate?.() || new Date(0);
+                            const dateB = b.createdAt?.toDate?.() || new Date(0)
+                            return dateB - dateA
+                        });
+                        setMeasurementHistory(measurementData)
+                        console.log(".....",measurementData);
+                        
+                        setLoading(false)
 
-        //     // realtime update
-        //     onSnapshot(dbrequest,(dbresult) => {
-        //         const redata = []
-        //         dbresult.forEach(doc => redata.push({
-        //             id:doc.id,
-        //             data:doc.data()
-        //         }));
-        //         setMeasurementHistory(redata)
-        //         console.log(".......",redata)
-        //     })
-        //     }
-        //     return fetchMeasurements()
-        // },[])
+                    },
+                
+                );
+                (er) => {
+                    console.log(er)
+                }
+                
+                return () => unsubscribe()
+            
+        
+        },[user.uid])
 
     return(
         <SafeAreaProvider>

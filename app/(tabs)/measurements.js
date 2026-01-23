@@ -5,6 +5,7 @@ import { appStyles } from "../../utilities/mainstyle";
 import { db } from "../../config/firebaseconfig";
 import { addDoc,collection } from "firebase/firestore";
 import { appColors } from "../../utilities/apptheme";
+import { useAuth } from "../../config/AuthContest";
 
 
 
@@ -30,6 +31,7 @@ const FEMALE_MEASUREMENT = [
 ]
 
 export default function Measurements(){
+    const {user} = useAuth()
 
     const [gender ,setGender] = useState(null)
     const [measurements ,setMeasurements] = useState("inches")
@@ -57,6 +59,7 @@ export default function Measurements(){
             gender:gender,
             unit:unit,
             measurements:measurements,
+            createdBy:user.uid,
             createdAt: new Date()
         });
         Alert.alert("ALERT!!","MEASUREMENTS SAVED SUCCESSFULLY",[{text:"okay"}])

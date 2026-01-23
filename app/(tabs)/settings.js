@@ -16,6 +16,7 @@ export default function Settings(){
     const handleLogout = async () => {
         try {
             await logout()
+            
         } catch (error) {
             Alert.alert("error","logout failed")
         }
