@@ -1,11 +1,11 @@
-import { View, Text, ScrollView, KeyboardAvoidingView, TouchableOpacity, Image, TextInput, Alert } from "react-native";
+import { View, Text, ScrollView, KeyboardAvoidingView, TouchableOpacity, Image, TextInput, Alert ,Platform} from "react-native";
 import { SafeAreaProvider,} from "react-native-safe-area-context";
 import { appStyles } from "../utilities/mainstyle";
 import { appColors } from "../utilities/apptheme";
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { Link } from "expo-router";
 import { useFormik } from "formik";
-import {signUpSchema} from "../components/signupvalidation"
+import {signUpValidation} from "../components/signupvalidation"
 import { useState } from "react";
 import {useAuth} from "../config/AuthContest"
 import { useRouter } from "expo-router";
@@ -49,12 +49,16 @@ export default function Signup() {
         setisLoading(false);
       }
     },
-      validationSchema:signUpSchema
+      validationSchema:signUpValidation
   });
 
     return (
         <SafeAreaProvider>
-            <KeyboardAvoidingView>
+            <KeyboardAvoidingView 
+            behavior={Platform.OS ==="ios" ? "padding" : "height"}
+            style={{flex:1,}}
+            keyboardVerticalOffset={Platform === "IOS" ? 90 :10}
+            >
                 <ScrollView>
                     <View style={{ justifyContent: "center", alignItems: "center", marginTop: 90 }}>
                         <Text>Create new account</Text>
@@ -82,10 +86,10 @@ export default function Signup() {
                                 onBlur={handleBlur("fullname")}
                                 
                             />
-                            <View>
+                            {/* <View>
                                 { touched.fullname && errors.fullname && (
                                 <Text>{errors.fullname}</Text>)}
-                            </View>
+                            </View> */}
                             
                             <TextInput
                                 keyboardType="default"
@@ -96,7 +100,7 @@ export default function Signup() {
                                 onChangeText={handleChange("username")}
                                 onBlur={handleBlur("username")}
                             />
-                              <View><Text>{errors.username}</Text></View>
+                              {/* <Text>{errors.username}</Text> */}
                             <TextInput
                                 keyboardType="phone-pad"
                                 placeholder="e.g 09132810490"
@@ -106,7 +110,7 @@ export default function Signup() {
                                 onChangeText={handleChange("phone")}
                                 onBlur={handleBlur("phone")}
                             />
-                              <View><Text>{errors.phone}</Text></View>
+                              {/* <View><Text>{errors.phone}</Text></View> */}
                             <TextInput
                                 keyboardType="email-address"
                                 placeholder="e.g danny@gmail.com "
@@ -116,7 +120,7 @@ export default function Signup() {
                                 onChangeText={handleChange("email")}
                                 onBlur={handleBlur("email")}
                             />
-                              <View><Text>{errors.email}</Text></View>
+                              {/* <View><Text>{errors.email}</Text></View> */}
                             <View style={appStyles.eyeview}>
                                 <TextInput
                                     keyboardType="default"
@@ -132,7 +136,7 @@ export default function Signup() {
                                     <FontAwesome5 name="eye" size={24} color={appColors.navy} />
                                 </TouchableOpacity>
                             </View>
-                              <View><Text>{errors.password}</Text></View>
+                              {/* <View><Text style={{color:"red",fontSize:12}}>{errors.password}</Text></View> */}
                             <View style={appStyles.eyeview}>
                                 <TextInput
                                     keyboardType="default"

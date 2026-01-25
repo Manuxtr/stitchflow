@@ -96,7 +96,8 @@ introText2:{
 // measurement styles
 scrollcontent:{
     paddingBottom:50,
-   paddingVertical:10
+   paddingVertical:10,
+
 
 },
 measureHeader:{
@@ -307,12 +308,13 @@ viewMeasurements:{
     justifyContent:"center",
     alignItems:"center",
     backgroundColor:appColors.red,
-    height:50,
-    width:"100%",
+    height:40,
+    width:"50%",
     borderRadius:50,
     display:"flex",
     flexDirection:"row",
     gap:10,
+    
   
 }
 ,
@@ -376,7 +378,105 @@ eyeview:{
     alignItems:"center"
 
     
-}
+},
+// history screen styles for displaying data
+
+measurementCard: {
+    backgroundColor: '#fff',
+    borderRadius: 12,
+    padding: 16,
+    borderWidth: 1,
+    borderColor: '#e0e0e0',
+    shadowColor: '#000',
+    shadowOffset: { width: 0, height: 2 },
+    shadowOpacity: 0.1,
+    shadowRadius: 4,
+    elevation: 3,
+  },
+  measurementHeader: {
+    flexDirection: 'row',
+    justifyContent: 'space-between',
+    alignItems: 'flex-start',
+    marginBottom: 12,
+    paddingBottom: 12,
+    borderBottomWidth: 1,
+    borderBottomColor: '#f0f0f0',
+  },
+  trackingId: {
+    fontSize: 16,
+    fontWeight: '700',
+    color: appColors.navy,
+    marginBottom: 4,
+  },
+  measurementDate: {
+    fontSize: 12,
+    color: '#666',
+  },
+  genderBadge: {
+    backgroundColor: appColors.purple,
+    paddingHorizontal: 12,
+    paddingVertical: 6,
+    borderRadius: 12,
+  },
+  genderText: {
+    fontSize: 12,
+    fontWeight: '600',
+    color: '#fff',
+  },
+  measurementDetails: {
+    gap: 8,
+  },
+  unitText: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: appColors.navy,
+    marginBottom: 8,
+  },
+  measurementsGrid: {
+    flexDirection: 'row',
+    flexWrap: 'wrap',
+    gap: 8,
+  },
+  measurementItem: {
+    flexDirection: 'row',
+    alignItems: 'center',
+    backgroundColor: '#f9f9f9',
+    paddingHorizontal: 10,
+    paddingVertical: 6,
+    borderRadius: 6,
+    minWidth: '45%',
+  },
+  measurementLabel: {
+    fontSize: 13,
+    fontWeight: '600',
+    color: '#666',
+    textTransform: 'capitalize',
+    marginRight: 6,
+  },
+  measurementValue: {
+    fontSize: 13,
+    fontWeight: '700',
+    color: appColors.navy,
+  },
+  emptyState: {
+    alignItems: 'center',
+    justifyContent: 'center',
+    paddingVertical: 60,
+    paddingHorizontal: 20,
+  },
+  emptyStateText: {
+    fontSize: 18,
+    fontWeight: '600',
+    color: '#999',
+    marginTop: 16,
+  },
+  emptyStateSubtext: {
+    fontSize: 14,
+    color: '#bbb',
+    marginTop: 8,
+    textAlign: 'center',
+  },
+
 
 
 
