@@ -2,18 +2,18 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import FontAwesome5 from "@expo/vector-icons/FontAwesome5";
 import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import * as ImagePicker from "expo-image-picker";
+import { Link } from "expo-router";
 import {
   collection,
+  deleteDoc,
   doc,
   getDoc,
   onSnapshot,
   query,
-  where,
-  deleteDoc
+  where
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import {
-  
   ActivityIndicator,
   Alert,
   FlatList,
@@ -34,40 +34,43 @@ export default function History() {
 
   const { user } = UseAuth();
   const [loading, setLoading] = useState(false);
+
   const [measurementHistory, setMeasurementHistory] = useState([]);
   const [profileImage, setProfileImage] = useState(null);
-  const [currentUser,setCurrentUser] = useState()
+  const [currentUser, setCurrentUser] = useState()
 
   // delete couments
 
   const handleDelete = async (bookingId) => {
     setLoading(true)
     try {
-      await deleteDoc(doc(db,"measurements",bookingId))
-      Alert.alert("Message","measurements deleted",[{text:"okay"}])
+      await deleteDoc(doc(db, "measurements", bookingId))
+      Alert.alert("Message", "measurements deleted", [{ text: "okay" }])
     } catch (error) {
-      Alert.alert("an error coccured while deleting measurements",error,[{text:"Dismiss"}])
+      console.error("Delete error:", error);
+      Alert.alert("Error", "An error occurred while deleting measurements", [{ text: "Dismiss" }])
     }
     setLoading(false)
 
   }
   // fetching using details from signup
 
-useEffect(() => {
-  const fetchuser =async () => {
-    try {
-      const userData = await getDoc(doc(db,"users",user.uid))
-      if(userData.exists()){
-        setCurrentUser(userData.data())
-     
-      }
-    } catch (error) {
-      Alert.alert("message","an error occured ",error)
-    }
+  useEffect(() => {
+    const fetchuser = async () => {
+      try {
+        const userData = await getDoc(doc(db, "users", user.uid))
+        if (userData.exists()) {
+          setCurrentUser(userData.data())
 
-  }
-  user !== undefined && fetchuser()
-},[user])
+        }
+      } catch (error) {
+        console.error("Fetch user error:", error);
+        Alert.alert("Error", "An error occurred while fetching user data")
+      }
+
+    }
+    user !== undefined && fetchuser()
+  }, [user])
 
   // function to pick image from gallery
   const pickImage = async () => {
@@ -89,7 +92,8 @@ useEffect(() => {
         Alert.alert("PROFILE IMAGE UPLOAD SUCCESSFUL");
       }
     } catch (error) {
-      Alert.alert("An error occurred while uploading the image.",error);
+      console.error("Image upload error:", error);
+      Alert.alert("Error", "An error occurred while uploading the image.");
     }
   };
   // fetch user data
@@ -114,7 +118,7 @@ useEffect(() => {
           return dateB - dateA;
         });
         setMeasurementHistory(measurementData);
-        console.log(".....", measurementData);
+        // console.log(".....", measurementData);
 
         setLoading(false);
       },
@@ -169,27 +173,27 @@ useEffect(() => {
               </View>
             ))}
           </View>
-           <View
-                    style={{
-                      flexDirection: "row",
-                      justifyContent: "space-around",
-                      alignItems: "center",
-                      marginTop: 20,
-                    }}
-                    >
-                    <TouchableOpacity>
-                      <View>
-                        <FontAwesome5 name="edit" size={24} color={appColors.navy} />
-                        <Text style={{ fontSize: 14, fontWeight: "800", color: appColors.navy }}>Edit</Text>
-                      </View>
-                    </TouchableOpacity>
-                    <TouchableOpacity onPress={() => handleDelete(item.id)}>
-                      <View style={{ justifyContent: "center", alignItems: "center" }}>
-                        <MaterialIcons name="delete" size={24} color={appColors.navy} />
-                        <Text style={{ fontSize: 14, fontWeight: "800", color: appColors.navy }}>Delete</Text>
-                      </View>
-                    </TouchableOpacity>
-                 </View>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "space-around",
+              alignItems: "center",
+              marginTop: 20,
+            }}
+          >
+            <Link href={{ pathname: "updatemeasurement/[uid]", params: { uid: item.id } }}>
+              <View>
+                <FontAwesome5 name="edit" size={24} color={appColors.navy} />
+                <Text style={{ fontSize: 14, fontWeight: "800", color: appColors.navy }}>Edit</Text>
+              </View>
+            </Link>
+            <TouchableOpacity onPress={() => handleDelete(item.id)}>
+              <View style={{ justifyContent: "center", alignItems: "center" }}>
+                <MaterialIcons name="delete" size={24} color={appColors.navy} />
+                <Text style={{ fontSize: 14, fontWeight: "800", color: appColors.navy }}>Delete</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
       </View>
     );
@@ -202,8 +206,8 @@ useEffect(() => {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }}>
-          
-        <View style={{ paddingHorizontal: 7 }}>
+
+        <View style={{ flex: 1, paddingHorizontal: 7 }}>
           {/* card */}
           <View style={appStyles.card}>
             {/* card content */}
@@ -241,8 +245,8 @@ useEffect(() => {
                   fontFamily: "AvegasRoyale-Bold",
                 }}
               >
-                Date Joined: 
-            
+                Date Joined: {currentUser?.createdAt ? new Date(currentUser.createdAt).toLocaleDateString('en-US', { month: 'short', year: 'numeric' }) : 'N/A'}
+
               </Text>
             </View>
           </View>
@@ -258,6 +262,27 @@ useEffect(() => {
             >
               ORDER MANAGEMENT
             </Text>
+          </View>
+          <View
+            style={{
+              flexDirection: "row",
+              justifyContent: "center",
+              alignItems: "center",
+              gap: 10,
+              marginTop: 20,
+            }}
+          >
+            <MaterialIcons
+              name="delivery-dining"
+              size={44}
+              color={appColors.navy}
+            />
+            <TextInput
+              keyboardType="default"
+              placeholder="enter tracking id"
+              style={appStyles.textinput}
+              placeholderTextColor="black"
+            />
           </View>
 
           <View>
@@ -292,37 +317,17 @@ useEffect(() => {
                   data={measurementHistory}
                   renderItem={renderMeasurementItems}
                   keyExtractor={(item) => item.id}
-                  contentContainerStyle={{ gap: 12 ,paddingBottom:50}}
-                 
+                  contentContainerStyle={{ gap: 12, paddingBottom: 50 }}
+
                 />
               )}
 
-                
+
 
             </View>
           </View>
 
-          <View
-            style={{
-              flexDirection: "row",
-              justifyContent: "center",
-              alignItems: "center",
-              gap: 10,
-              marginTop: 20,
-            }}
-          >
-            <MaterialIcons
-              name="delivery-dining"
-              size={44}
-              color={appColors.navy}
-            />
-            <TextInput
-              keyboardType="default"
-              placeholder="enter tracking id"
-              style={appStyles.textinput}
-              placeholderTextColor="black"
-            />
-          </View>
+
 
         </View>
       </SafeAreaView>

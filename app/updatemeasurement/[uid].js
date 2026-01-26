@@ -1,12 +1,12 @@
-import { addDoc, collection } from "firebase/firestore";
+import { doc, updateDoc } from "firebase/firestore";
 import { useState } from "react";
 import { ActivityIndicator, Alert, KeyboardAvoidingView, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+
+import { useLocalSearchParams,useRouter } from "expo-router";
 import { db } from "../../config/firebaseconfig";
 import { appColors } from "../../utilities/apptheme";
 import { appStyles } from "../../utilities/mainstyle";
-import { UseAuth } from "../../config/AuthContest";
-import { useRouter } from "expo-router";
 
 
 
@@ -32,13 +32,15 @@ const FEMALE_MEASUREMENT = [
 ]
 
 export default function Measurements() {
-  
+
     const [gender, setGender] = useState(null)
     const [measurements, setMeasurements] = useState({})
     const [unit, setUnits] = useState("inches")
     const [IsLoading, setIsLoading] = useState(false)
-    const {user} = UseAuth()
+    const { uid } = useLocalSearchParams()
     const router = useRouter()
+
+
 
     const measurementFields = gender === "male" ? MALE_MEASUREMENT : FEMALE_MEASUREMENT;
 
@@ -49,27 +51,29 @@ export default function Measurements() {
         }));
     };
 
-    const HandleMeasurementSave = async () => {
-        if (!gender || Object.keys(measurements).length === 0) {
+    const HandleMeasurementUpdate = async () => {
+        if (!gender && !unit || Object.keys(measurements).length === 0) {
             Alert.alert("Missing Fields", "please select a gender and fill in measurements")
         };
 
         setIsLoading(true);
         try {
-             await addDoc(collection(db, "measurements"), {
+            const docRef = doc(db, "measurements", uid)
+            await updateDoc(docRef, {
                 gender: gender,
                 unit: unit,
                 measurements: measurements,
-                createdBy: user.uid,
-                createdAt: new Date()
-            });
-            Alert.alert("ALERT!!", "MEASUREMENTS SAVED SUCCESSFULLY", [{ text: "okay" }])
-            setIsLoading(false)
-            router.back()
-        } catch (error) {
-            console.log("??????", error)
-            Alert.alert("ERROR", "AN ERROR OCCURED WHILE SAVING MEASUREMENTS,PLEASE CHECK YOUR INTERNET CONNECTION")
+                updatedAt: new Date().getTime()
 
+            })
+            setIsLoading(false)
+            Alert.alert("ALERT!!", "MEASUREMENTS SAVED SUCCESSFULLY", [{ text: "okay" }])
+            router.back()
+
+        } catch (error) {
+            console.error("Update measurement error:", error)
+            Alert.alert("ERROR", "AN ERROR OCCURRED WHILE UPDATING MEASUREMENTS. PLEASE CHECK YOUR INTERNET CONNECTION")
+            setIsLoading(false)
         }
     };
 
@@ -151,7 +155,7 @@ export default function Measurements() {
                         {/* measurement input */}
                         {gender && (
                             <View style={appStyles.section}>
-                                <Text style={appStyles.inputTitle}>Enter Measurements</Text>
+                                <Text style={appStyles.inputTitle}>update</Text>
                                 <Text style={appStyles.unit}>(in {unit === "inches" ? "inches" : "cm"})</Text>
                                 {measurementFields.map((field) => (
                                     <View key={field.key} >
@@ -179,9 +183,11 @@ export default function Measurements() {
                         {/* CALL TO ACTION */}
                         {gender && (
                             <View style={appStyles.ctaView}>
-                                <TouchableOpacity onPress={HandleMeasurementSave} style={appStyles.savebtn}>
+                                <TouchableOpacity onPress={
+                                    HandleMeasurementUpdate
+                                } style={appStyles.savebtn}>
                                     {IsLoading ? <ActivityIndicator color={appColors.red} size="small" /> :
-                                        <Text style={appStyles.ctatext}>Save</Text>}
+                                        <Text style={appStyles.ctatext}>update</Text>}
                                 </TouchableOpacity>
                                 <TouchableOpacity
                                     onPress={HandleReset}

@@ -1,45 +1,47 @@
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import { Link ,useRouter} from "expo-router";
-import { Alert, Image, KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableOpacity, View,ActivityIndicator } from "react-native";
+import { Link, useRouter } from "expo-router";
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import { useState } from 'react';
+import { ActivityIndicator, Alert, Image, KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
+import { UseAuth } from '../config/AuthContest';
+import { auth } from '../config/firebaseconfig';
 import { appColors } from "../utilities/apptheme";
 import { appStyles } from "../utilities/mainstyle";
-import { useState } from 'react';
-import { UseAuth } from '../config/AuthContest';
-import { signInWithEmailAndPassword } from 'firebase/auth';
-import { auth } from '../config/firebaseconfig';
 
 
 
 
 
 export default function Signin() {
-const [email,setEmail] = useState("")
-const [password,setPassword] = useState("")
-const {login} = UseAuth()
-const [isLaoading,setIsLoading] = useState(false)
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [isLaoading, setIsLoading] = useState(false)
+    const { login } = UseAuth()
 
 
-const router = useRouter()
 
-const handleLogin = async () => {
-    setIsLoading(true)
-    try {
-        const userCredentail = await signInWithEmailAndPassword(auth,email,password);
-        await login({
-            uid:userCredentail.uid,
-            email:userCredentail.user.email
-        });
-        setIsLoading(false)
-        router.replace("/(tabs)/homepage")
-    } catch (error) {
-        Alert.alert("login error","an error occured,try again",error)
-        setIsLoading(false)
-        
+    const router = useRouter()
+
+    const handleLogin = async () => {
+        setIsLoading(true)
+        try {
+            const userCredentail = await signInWithEmailAndPassword(auth, email, password);
+            await login({
+                uid: userCredentail.uid,
+                email: userCredentail.user.email
+            });
+            setIsLoading(false)
+            router.replace("/(tabs)/homepage")
+        } catch (error) {
+            console.error("Login error:", error);
+            Alert.alert("Login Error", "An error occurred, please try again");
+            setIsLoading(false);
+
+        }
+
     }
 
-}
- 
 
     return (
         <SafeAreaProvider>
@@ -71,7 +73,7 @@ const handleLogin = async () => {
                                 style={appStyles.inputField}
                                 value={email}
                                 onChangeText={setEmail}
-                                
+
                             />
                             <View style={appStyles.eyeview}>
                                 <TextInput
@@ -82,17 +84,15 @@ const handleLogin = async () => {
                                     style={{ flex: 1 }}
                                     value={password}
                                     onChangeText={setPassword}
-                                
+
                                 />
-                                <TouchableOpacity>
-                                    <FontAwesome5 name="eye" size={24} color={appColors.navy} />
-                                </TouchableOpacity>
+                                
                             </View>
 
                             <TouchableOpacity onPress={handleLogin}>
                                 <View style={{ height: 50, width: 300, backgroundColor: appColors.navy, justifyContent: "center", alignItems: "center", borderRadius: 15 }}>
-                                   { isLaoading ? <ActivityIndicator size={"small"} color={"red"}/> :
-                                    <Text style={{ fontSize: 15, color: "white", fontWeight: "600" }}>Sign in</Text>}
+                                    {isLaoading ? <ActivityIndicator size={"small"} color={"red"} /> :
+                                        <Text style={{ fontSize: 15, color: "white", fontWeight: "600" }}>Sign in</Text>}
                                 </View>
                             </TouchableOpacity>
                             <View style={{ justifyContent: "center", alignItems: "center" }}>
