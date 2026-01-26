@@ -4,13 +4,16 @@ import MaterialIcons from "@expo/vector-icons/MaterialIcons";
 import * as ImagePicker from "expo-image-picker";
 import {
   collection,
+  doc,
+  getDoc,
   onSnapshot,
   query,
-  where
+  where,
+  deleteDoc
 } from "firebase/firestore";
 import { useEffect, useState } from "react";
 import {
-  ScrollView,
+  
   ActivityIndicator,
   Alert,
   FlatList,
@@ -21,16 +24,50 @@ import {
   View
 } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { useAuth } from "../../config/AuthContest";
+import { UseAuth } from "../../config/AuthContest";
 import { db } from "../../config/firebaseconfig";
 import { appColors } from "../../utilities/apptheme";
 import { appStyles } from "../../utilities/mainstyle";
 
+
 export default function History() {
-  const { user } = useAuth();
+
+  const { user } = UseAuth();
   const [loading, setLoading] = useState(false);
   const [measurementHistory, setMeasurementHistory] = useState([]);
   const [profileImage, setProfileImage] = useState(null);
+  const [currentUser,setCurrentUser] = useState()
+
+  // delete couments
+
+  const handleDelete = async (bookingId) => {
+    setLoading(true)
+    try {
+      await deleteDoc(doc(db,"measurements",bookingId))
+      Alert.alert("Message","measurements deleted",[{text:"okay"}])
+    } catch (error) {
+      Alert.alert("an error coccured while deleting measurements",error,[{text:"Dismiss"}])
+    }
+    setLoading(false)
+
+  }
+  // fetching using details from signup
+
+useEffect(() => {
+  const fetchuser =async () => {
+    try {
+      const userData = await getDoc(doc(db,"users",user.uid))
+      if(userData.exists()){
+        setCurrentUser(userData.data())
+     
+      }
+    } catch (error) {
+      Alert.alert("message","an error occured ",error)
+    }
+
+  }
+  user !== undefined && fetchuser()
+},[user])
 
   // function to pick image from gallery
   const pickImage = async () => {
@@ -52,7 +89,7 @@ export default function History() {
         Alert.alert("PROFILE IMAGE UPLOAD SUCCESSFUL");
       }
     } catch (error) {
-      Alert.alert("An error occurred while uploading the image.");
+      Alert.alert("An error occurred while uploading the image.",error);
     }
   };
   // fetch user data
@@ -87,7 +124,7 @@ export default function History() {
     );
 
     return () => unsubscribe();
-  }, []);
+  }, [user.uid]);
 
   const renderMeasurementItems = ({ item }) => {
     if (!item) return null;
@@ -146,7 +183,7 @@ export default function History() {
                         <Text style={{ fontSize: 14, fontWeight: "800", color: appColors.navy }}>Edit</Text>
                       </View>
                     </TouchableOpacity>
-                    <TouchableOpacity>
+                    <TouchableOpacity onPress={() => handleDelete(item.id)}>
                       <View style={{ justifyContent: "center", alignItems: "center" }}>
                         <MaterialIcons name="delete" size={24} color={appColors.navy} />
                         <Text style={{ fontSize: 14, fontWeight: "800", color: appColors.navy }}>Delete</Text>
@@ -195,7 +232,7 @@ export default function History() {
                   fontFamily: "Paterna",
                 }}
               >
-                Hi Tochukwu
+                Hi {currentUser?.fullname}
               </Text>
               <Text
                 style={{
@@ -204,11 +241,8 @@ export default function History() {
                   fontFamily: "AvegasRoyale-Bold",
                 }}
               >
-                Date Joined{" "}
-                {new Date().toLocaleString("en-US", {
-                  month: "short",
-                  year: "numeric",
-                })}
+                Date Joined: 
+            
               </Text>
             </View>
           </View>

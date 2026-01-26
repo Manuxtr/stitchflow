@@ -68,7 +68,7 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-export const useAuth = () => {
+export const UseAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
    Alert.alert("Error", "TRY AGAIN LATER");

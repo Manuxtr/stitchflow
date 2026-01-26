@@ -1,9 +1,10 @@
 import { SafeAreaView,SafeAreaProvider } from "react-native-safe-area-context";
-import { View,Text,Image,StyleSheet,Dimensions,FlatList,TouchableOpacity } from "react-native";
-import { Link } from "expo-router";
+import { View,Text,Image,FlatList,TouchableOpacity } from "react-native";
+
 import { eventData } from "../../assets/images/localdata/fashionstyle";
 import {appStyles} from "../../utilities/mainstyle"
 import AntDesign from '@expo/vector-icons/AntDesign';
+import { useState } from "react";
 
 
 
@@ -15,6 +16,11 @@ function ImageSeperator(){
     )}
 
 export default function Homepage(){
+  const [liked,setLiked] = useState(false)
+
+  const handleLike = () => {
+    setLiked(!liked)
+  }
    
 
     return(
@@ -41,8 +47,8 @@ export default function Homepage(){
                                  </View>
                                     <View style={appStyles.iconView}>
                                         <View style ={appStyles.iconDiplay}>
-                                        <TouchableOpacity>
-                                            <AntDesign name="heart" size={24} color="black" />
+                                        <TouchableOpacity onPress={handleLike}>
+                                            <AntDesign name="heart" size={24} color={liked ? "red" : "black"} />
                                         </TouchableOpacity>
                                         <TouchableOpacity>
                                             <AntDesign name="comment" size={24} color="black" />

@@ -1,14 +1,14 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import { Tabs ,Redirect} from "expo-router";
-import { useAuth } from '../../config/AuthContest';
+import { UseAuth } from '../../config/AuthContest';
 
 
 
 
 export default function _Layout() {
     
-    const {loading,user} = useAuth()
+    const {loading,user} = UseAuth()
     if(loading)
         return null
     if(!user){

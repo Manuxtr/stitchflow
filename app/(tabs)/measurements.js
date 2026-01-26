@@ -2,10 +2,11 @@ import { addDoc, collection } from "firebase/firestore";
 import { useState } from "react";
 import { ActivityIndicator, Alert, KeyboardAvoidingView, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { useAuth } from "../../config/AuthContest";
+
 import { db } from "../../config/firebaseconfig";
 import { appColors } from "../../utilities/apptheme";
 import { appStyles } from "../../utilities/mainstyle";
+import { UseAuth } from "../../config/AuthContest";
 
 
 
@@ -31,8 +32,8 @@ const FEMALE_MEASUREMENT = [
 ]
 
 export default function Measurements() {
-    const { user } = useAuth()
-
+  
+    const {user} = UseAuth()
     const [gender, setGender] = useState(null)
     const [measurements, setMeasurements] = useState({})
     const [unit, setUnits] = useState("inches")
@@ -55,7 +56,7 @@ export default function Measurements() {
 
         setIsLoading(true);
         try {
-            const docRef = await addDoc(collection(db, "measurements"), {
+             await addDoc(collection(db, "measurements"), {
                 gender: gender,
                 unit: unit,
                 measurements: measurements,

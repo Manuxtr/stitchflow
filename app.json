@@ -19,7 +19,8 @@
         "monochromeImage": "./assets/images/stitchlg.png"
       },
       "edgeToEdgeEnabled": true,
-      "predictiveBackGestureEnabled": false
+      "predictiveBackGestureEnabled": false,
+      "package": "com.djmanuwave.stitchflow"
     },
     "web": {
       "output": "static",
@@ -44,6 +45,12 @@
     "experiments": {
       "typedRoutes": true,
       "reactCompiler": true
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "9406ef72-02c7-4ec6-9e8b-615a55be974b"
+      }
     }
   }
 }

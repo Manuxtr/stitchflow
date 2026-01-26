@@ -1,36 +1,36 @@
-import { View, Text, ScrollView, KeyboardAvoidingView, TouchableOpacity, Image, TextInput, Alert ,Platform} from "react-native";
+import {  ActivityIndicator,View, Text, ScrollView, KeyboardAvoidingView, TouchableOpacity, Image, TextInput, Alert ,Platform} from "react-native";
 import { SafeAreaProvider,} from "react-native-safe-area-context";
 import { appStyles } from "../utilities/mainstyle";
 import { appColors } from "../utilities/apptheme";
 import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
-import { Link } from "expo-router";
 import { useFormik } from "formik";
 import {signUpValidation} from "../components/signupvalidation"
 import { useState } from "react";
-import {useAuth} from "../config/AuthContest"
-import { useRouter } from "expo-router";
-import { ActivityIndicator } from "react-native";
+import {UseAuth} from "../config/AuthContest"
+import { useRouter ,Link } from "expo-router";
+
+
 
 
 
 export default function Signup() {
 
-    const { signUp } = useAuth();
+    const { signUp } = UseAuth();
     const [isLoading, setisLoading] = useState(false); 
-    const [showPassword,setShowPassword] = useState(false)
-    const [showcomPassword,setShowcomPassword] = useState(false)
+    // const [showPassword,setShowPassword] = useState(false)
+    // const [showcomPassword,setShowcomPassword] = useState(false)
 
   const router = useRouter();
 
 //   password visibility
-  const togglePasswordVisibility = () => {
-    setShowPassword(!showPassword)
-  }
-  const togglePasswordVisibility2 = () => {
-    setShowcomPassword(!showcomPassword)
-  }
+//   const togglePasswordVisibility = () => {
+//     setShowPassword(!showPassword)
+//   }
+//   const togglePasswordVisibility2 = () => {
+//     setShowcomPassword(!showcomPassword)
+//   }
 
-  const { handleBlur, handleChange, handleSubmit, touched, errors, values } = useFormik({
+  const { handleBlur, handleChange, handleSubmit,  errors, values } = useFormik({
     initialValues: {username:"", fullname:"",phone:"",email: "", password: "", passwordConfirmation: "" },
     onSubmit: async () => {
       setisLoading(true);
@@ -45,7 +45,7 @@ export default function Signup() {
         setisLoading(false);
         router.replace("/(tabs)/homepage");
       } catch (err) {
-        Alert.alert("Signup failed", "An unexpected error occurred");
+        Alert.alert("Signup failed", "An unexpected error occurred",err);
         setisLoading(false);
       }
     },

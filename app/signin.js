@@ -5,7 +5,7 @@ import { SafeAreaProvider } from "react-native-safe-area-context";
 import { appColors } from "../utilities/apptheme";
 import { appStyles } from "../utilities/mainstyle";
 import { useState } from 'react';
-import { useAuth } from '../config/AuthContest';
+import { UseAuth } from '../config/AuthContest';
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { auth } from '../config/firebaseconfig';
 
@@ -16,7 +16,7 @@ import { auth } from '../config/firebaseconfig';
 export default function Signin() {
 const [email,setEmail] = useState("")
 const [password,setPassword] = useState("")
-const {login,user} = useAuth()
+const {login} = UseAuth()
 const [isLaoading,setIsLoading] = useState(false)
 
 
@@ -33,7 +33,7 @@ const handleLogin = async () => {
         setIsLoading(false)
         router.replace("/(tabs)/homepage")
     } catch (error) {
-        Alert.alert("login error","an error occured,try again")
+        Alert.alert("login error","an error occured,try again",error)
         setIsLoading(false)
         
     }

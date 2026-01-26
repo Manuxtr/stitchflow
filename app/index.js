@@ -22,7 +22,7 @@ export default function Index (){
           source={require("../assets/images/stitchlg.png")}
           style={myStyles.logo}
           />
-          <Text style={appStyles.introText2}>When you choose Stitch Flow Fashion, you're choosing ease,comfort and relaibility</Text>
+          <Text style={appStyles.introText2}>{"When you choose Stitch Flow Fashion, you're choosing ease,comfort and relaibility"}</Text>
        </View>
      {/* bottom */}
      <View style={{paddingHorizontal:30,paddingBottom:20}} >
