@@ -37,27 +37,27 @@ export const AuthProvider = ({ children }) => {
           createdAt: new Date().getTime(),
         });
       } catch (e) {
-       Alert.alert("Failed to create user profile", e);
+        Alert.alert("Failed to create user profile", e);
       }
       return { success: true, user: u };
 
     } catch (error) {
-      Alert.alert("error","unable to create profile at the moments")
-      return { success: false, error: errorMessage };
+      Alert.alert("error", "unable to create profile at the moments")
+      return { success: false, error: error.message };
     }
   };
 
-//   user login
+  //   user login
   const login = async (userData) => {
     setUser(userData);
   };
 
-//   user logout
+  //   user logout
   const logout = async () => {
     try {
       await firebaseSignOut(firebaseAuth);
     } catch (e) {
-     Alert.alert("Error", "Failed to sign out");
+      Alert.alert("Error", "Failed to sign out");
     }
   };
 
@@ -71,7 +71,7 @@ export const AuthProvider = ({ children }) => {
 export const UseAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
-   Alert.alert("Error", "TRY AGAIN LATER");
+    Alert.alert("Error", "TRY AGAIN LATER");
   }
   return context;
 };

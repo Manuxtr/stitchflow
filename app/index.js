@@ -26,7 +26,7 @@ export default function Index (){
        </View>
      {/* bottom */}
      <View style={{paddingHorizontal:30,paddingBottom:20}} >
-      <Link href="/(tabs)/homepage">
+      <Link href="/signin">
         <View style={appStyles.getstartedView}><Text style={appStyles.linktext}>GET STARTED</Text></View>
       </Link>
      </View>
