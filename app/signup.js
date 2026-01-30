@@ -5,7 +5,7 @@ import { useState } from "react";
 import { ActivityIndicator, Alert, Image, KeyboardAvoidingView, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaProvider, } from "react-native-safe-area-context";
 import { signUpValidation } from "../components/signupvalidation";
-import { UseAuth } from "../config/AuthContest";
+import { useAuth } from "../config/AuthContest";
 import { appColors } from "../utilities/apptheme";
 import { appStyles } from "../utilities/mainstyle";
 
@@ -15,7 +15,7 @@ import { appStyles } from "../utilities/mainstyle";
 
 export default function Signup() {
 
-    const { signUp } = UseAuth();
+    const { signUp } = useAuth();
     const [isLoading, setisLoading] = useState(false);
     const [showPassword, setShowPassword] = useState(false)
     const [showcomPassword, setShowcomPassword] = useState(false)

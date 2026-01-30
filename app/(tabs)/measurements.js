@@ -1,12 +1,12 @@
+import { useRouter } from "expo-router";
 import { addDoc, collection } from "firebase/firestore";
 import { useState } from "react";
 import { ActivityIndicator, Alert, KeyboardAvoidingView, Platform, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
+import { useAuth } from "../../config/AuthContest";
 import { db } from "../../config/firebaseconfig";
 import { appColors } from "../../utilities/apptheme";
 import { appStyles } from "../../utilities/mainstyle";
-import { UseAuth } from "../../config/AuthContest";
-import { useRouter } from "expo-router";
 
 
 
@@ -32,12 +32,13 @@ const FEMALE_MEASUREMENT = [
 ]
 
 export default function Measurements() {
-  
+    const { user } = useAuth()
     const [gender, setGender] = useState(null)
     const [measurements, setMeasurements] = useState({})
     const [unit, setUnits] = useState("inches")
     const [IsLoading, setIsLoading] = useState(false)
-    const {user} = UseAuth()
+   
+   
     const router = useRouter()
 
     const measurementFields = gender === "male" ? MALE_MEASUREMENT : FEMALE_MEASUREMENT;
@@ -50,26 +51,35 @@ export default function Measurements() {
     };
 
     const HandleMeasurementSave = async () => {
+        if (!user) {
+            Alert.alert("Authentication Error", "You must be signed in to save measurements.");
+            return;
+        }
+
         if (!gender || Object.keys(measurements).length === 0) {
             Alert.alert("Missing Fields", "please select a gender and fill in measurements")
+            return;
         };
 
         setIsLoading(true);
         try {
-             await addDoc(collection(db, "measurements"), {
+            await addDoc(collection(db, "measurements"), {
                 gender: gender,
                 unit: unit,
                 measurements: measurements,
-                createdBy: user.uid,
+                createdBy: {
+                    uid: user.uid,
+                    email: user.email
+                },
                 createdAt: new Date()
             });
-            Alert.alert("ALERT!!", "MEASUREMENTS SAVED SUCCESSFULLY", [{ text: "okay" }])
+            Alert.alert("Success", "MEASUREMENTS SAVED SUCCESSFULLY", [{ text: "okay" }])
             setIsLoading(false)
             router.back()
         } catch (error) {
-            console.log("??????", error)
-            Alert.alert("ERROR", "AN ERROR OCCURED WHILE SAVING MEASUREMENTS,PLEASE CHECK YOUR INTERNET CONNECTION")
-
+            console.log("Error saving measurements:", error)
+            Alert.alert("Error", "AN ERROR OCCURED WHILE SAVING MEASUREMENTS,PLEASE CHECK YOUR INTERNET CONNECTION")
+            setIsLoading(false)
         }
     };
 

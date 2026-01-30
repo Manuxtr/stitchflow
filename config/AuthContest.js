@@ -4,11 +4,15 @@ import { createContext, useContext, useEffect, useState } from 'react';
 import { Alert } from 'react-native';
 import { db, auth as firebaseAuth } from '../config/firebaseconfig';
 
-const AuthContext = createContext();
+
+
+
+export const AuthContext = createContext();
 
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
+
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(firebaseAuth, (user) => {
@@ -68,7 +72,7 @@ export const AuthProvider = ({ children }) => {
   );
 };
 
-export const UseAuth = () => {
+export const useAuth = () => {
   const context = useContext(AuthContext);
   if (!context) {
     Alert.alert("Error", "TRY AGAIN LATER");

@@ -4,7 +4,7 @@
     "slug": "stitchflow",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/stitchlg.png",
+    "icon": "./assets/images/icon.png",
     "scheme": "stitchflow",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,
@@ -24,14 +24,14 @@
     },
     "web": {
       "output": "static",
-      "favicon": "./assets/images/stitchlg.png"
+      "favicon": "./assets/images/favicon.png"
     },
     "plugins": [
       "expo-router",
       [
         "expo-splash-screen",
         {
-          "image": "./assets/images/stitchlg.png",
+          "image": "./assets/images/splash-icon.png",
           "imageWidth": 420,
           "resizeMode": "contain",
           "backgroundColor": "#0C2B4E",

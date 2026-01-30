@@ -16,6 +16,7 @@ function ImageSeperator(){
     )}
 
 export default function Homepage(){
+    
   const [liked,setLiked] = useState(false)
 
   const handleLike = () => {

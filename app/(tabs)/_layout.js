@@ -1,21 +1,25 @@
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { Tabs ,Redirect} from "expo-router";
-import { UseAuth } from '../../config/AuthContest';
+import { Redirect, Tabs } from "expo-router";
+import { ActivityIndicator,View } from "react-native";
+import { useAuth } from '../../config/AuthContest';
 
 
 
 
-export default function _Layout() {
-    
-    const {loading,user} = UseAuth()
-    if(loading)
-        return null
-    if(!user){
-        return <Redirect href={"/signin"}/>
+
+export default function TabsLayout() {
+    const { loading, user } = useAuth()
+
+    if (loading)
+        return (
+            <View>
+                <ActivityIndicator size="large" color="black" />
+            </View>
+        )
+    if (!user) {
+        return <Redirect href={"/signin"} />
     }
-
-
 
     return (
         <Tabs screenOptions={{ tabBarActiveTintColor: "red" }}>

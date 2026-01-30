@@ -5,35 +5,21 @@ import { doc, getDoc } from "firebase/firestore";
 import { useEffect, useState } from 'react';
 import { ActivityIndicator, Alert, Image, Text, TouchableOpacity, View } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { UseAuth } from "../../config/AuthContest";
+import { useAuth } from "../../config/AuthContest";
 import { db } from "../../config/firebaseconfig";
 import { appStyles } from "../../utilities/mainstyle";
 
 export default function Settings() {
     // All useState hooks must be at the top
-    
+    const { logout, user } = useAuth()
     const [currentUser, setCurrentUser] = useState()
     const [isLoading, setIsLoading] = useState(false)
     const [profileImage, setProfileImage] = useState(null)
-    const { logout, user } = UseAuth()
 
 
-
-
-    const handleLogout = async () => {
-        setIsLoading(true)
-        try {
-            await logout()
-        } catch (error) {
-            console.error("Logout error:", error);
-            Alert.alert("Error", "Logout failed");
-            setIsLoading(false);
-        }
-    }
-
-        useEffect(() => {
-        if (!user) return;
-
+    useEffect(() => {
+        if (!user) return
+        
         const fetchuser = async () => {
             try {
                 const userData = await getDoc(doc(db, "users", user.uid))
@@ -48,6 +34,17 @@ export default function Settings() {
 
         fetchuser()
     }, [user])
+
+    const handleLogout = async () => {
+        setIsLoading(true)
+        try {
+            await logout()
+        } catch (error) {
+            console.error("Logout error:", error);
+            Alert.alert("Error", "Logout failed");
+            setIsLoading(false);
+        }
+    }
 
     // function to pick image from gallery
     const pickImage = async () => {
@@ -72,6 +69,10 @@ export default function Settings() {
             Alert.alert("Error", "An error occurred while uploading the image.");
         }
     };
+
+    if (!user) {
+        return null
+    }
     return (
         <SafeAreaProvider>
             <SafeAreaView style={{ flex: 1, gap: 50, paddingHorizontal: 7 }}>

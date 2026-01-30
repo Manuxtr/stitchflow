@@ -1,10 +1,9 @@
-import FontAwesome5 from '@expo/vector-icons/FontAwesome5';
 import { Link, useRouter } from "expo-router";
 import { signInWithEmailAndPassword } from 'firebase/auth';
 import { useState } from 'react';
 import { ActivityIndicator, Alert, Image, KeyboardAvoidingView, ScrollView, Text, TextInput, TouchableOpacity, View } from "react-native";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { UseAuth } from '../config/AuthContest';
+import { useAuth } from '../config/AuthContest';
 import { auth } from '../config/firebaseconfig';
 import { appColors } from "../utilities/apptheme";
 import { appStyles } from "../utilities/mainstyle";
@@ -14,10 +13,11 @@ import { appStyles } from "../utilities/mainstyle";
 
 
 export default function Signin() {
+    const { login } = useAuth()
     const [email, setEmail] = useState("")
     const [password, setPassword] = useState("")
     const [isLaoading, setIsLoading] = useState(false)
-    const { login } = UseAuth()
+   
 
 
 
@@ -28,7 +28,7 @@ export default function Signin() {
         try {
             const userCredentail = await signInWithEmailAndPassword(auth, email, password);
             await login({
-                uid: userCredentail.uid,
+                uid: userCredentail.user.uid,
                 email: userCredentail.user.email
             });
             setIsLoading(false)
@@ -86,7 +86,7 @@ export default function Signin() {
                                     onChangeText={setPassword}
 
                                 />
-                                
+
                             </View>
 
                             <TouchableOpacity onPress={handleLogin}>

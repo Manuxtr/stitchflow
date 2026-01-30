@@ -24,7 +24,7 @@ import {
   View
 } from "react-native";
 import { SafeAreaProvider, SafeAreaView } from "react-native-safe-area-context";
-import { UseAuth } from "../../config/AuthContest";
+import { useAuth } from "../../config/AuthContest";
 import { db } from "../../config/firebaseconfig";
 import { appColors } from "../../utilities/apptheme";
 import { appStyles } from "../../utilities/mainstyle";
@@ -32,12 +32,11 @@ import { appStyles } from "../../utilities/mainstyle";
 
 export default function History() {
 
-  const { user } = UseAuth();
   const [loading, setLoading] = useState(false);
-
   const [measurementHistory, setMeasurementHistory] = useState([]);
   const [profileImage, setProfileImage] = useState(null);
   const [currentUser, setCurrentUser] = useState()
+  const { user } = useAuth();
 
   // delete couments
 
@@ -55,6 +54,7 @@ export default function History() {
   }
   // fetching using details from signup
 
+
   useEffect(() => {
     const fetchuser = async () => {
       try {
@@ -69,7 +69,9 @@ export default function History() {
       }
 
     }
-    user !== undefined && fetchuser()
+    if (user?.uid) {
+      fetchuser()
+    }
   }, [user])
 
   // function to pick image from gallery
@@ -97,10 +99,13 @@ export default function History() {
     }
   };
   // fetch user data
+
   useEffect(() => {
     // realtime update from db
     setLoading(true);
-    const q = query(collection(db, "measurements"), where("createdBy", "==", user.uid));
+    
+    const q = query(collection(db, "measurements"), where("createdBy.uid", "==", user.uid));
+  
     const unsubscribe = onSnapshot(
       q,
       (snapShot) => {
@@ -128,10 +133,14 @@ export default function History() {
     );
 
     return () => unsubscribe();
-  }, [user.uid]);
+  }, [user]);
 
   const renderMeasurementItems = ({ item }) => {
-    if (!item) return null;
+    if (!item) return (
+      <View>
+        <ActivityIndicator size="large" color="black" />
+      </View>
+    );
 
     // Safely handle the date
     let formattedDate = "N/A";
