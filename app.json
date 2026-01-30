@@ -4,7 +4,7 @@
     "slug": "stitchflow",
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/images/icon.png",
+    "icon": "./assets/images/stitchlg.png",
     "scheme": "stitchflow",
     "userInterfaceStyle": "automatic",
     "newArchEnabled": true,

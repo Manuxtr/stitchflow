@@ -26,24 +26,15 @@ export default function RootLayout() {
     }
   }, [fontsloaded]);
 
-  // If there's an error loading fonts, you might want to log it
-  
-
-
   return (
     <AuthProvider>
-      {!fontsloaded ? (
-        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center' }}>
-          <ActivityIndicator size="large" color="black" />
-        </View>
-      ) : (
         <Stack screenOptions={{ headerShown: false }}>
           <Stack.Screen name="index" />
           <Stack.Screen name="(tabs)" />
           <Stack.Screen name="signin" options={{ title: "sign in" }} />
           <Stack.Screen name="signup" options={{ title: "sign up" }} />
+          <Stack.Screen name="updatemeasurement/[uid]" options={{title:"updatemeasurement"}}/>
         </Stack>
-      )}
     </AuthProvider>
   );
 }

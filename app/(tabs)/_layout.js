@@ -1,6 +1,6 @@
+import { Redirect, Tabs } from "expo-router";
 import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
-import { Redirect, Tabs } from "expo-router";
 import { ActivityIndicator,View } from "react-native";
 import { useAuth } from '../../config/AuthContest';
 
@@ -14,7 +14,7 @@ export default function TabsLayout() {
     if (loading)
         return (
             <View>
-                <ActivityIndicator size="large" color="black" />
+                <ActivityIndicator size={"large"} color={"black"} style={{flex:1,justifyContent:"center",alignItems:"center"}} />
             </View>
         )
     if (!user) {
